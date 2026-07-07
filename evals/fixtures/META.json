@@ -1,0 +1,69 @@
+{
+  "note": "Aufgezeichneter, illustrativer Daten-Snapshot fuer Offline-Tests und Evals. Werte sind NICHT aktuell - fuer echte Analysen den Live-Modus verwenden.",
+  "fundamentals": {
+    "ticker": "META",
+    "name": "Meta Platforms, Inc.",
+    "sector": "Communication Services",
+    "industry": "Internet Content & Information",
+    "currency": "USD",
+    "metrics": {
+      "price": 595.3,
+      "market_cap": 1510000000000.0,
+      "trailing_pe": 27.9,
+      "forward_pe": 23.4,
+      "price_to_book": 9.2,
+      "price_to_sales": 9.5,
+      "ev_to_ebitda": 17.2,
+      "peg_ratio": 1.2,
+      "profit_margin": 0.358,
+      "operating_margin": 0.427,
+      "gross_margin": 0.816,
+      "revenue_growth": 0.188,
+      "earnings_growth": 0.352,
+      "return_on_equity": 0.371,
+      "debt_to_equity": 29.8,
+      "current_ratio": 2.73,
+      "free_cashflow": 52000000000.0,
+      "total_revenue": 164000000000.0,
+      "dividend_yield": 0.0034,
+      "beta": 1.21,
+      "fifty_two_week_high": 638.4,
+      "fifty_two_week_low": 414.5
+    }
+  },
+  "price_stats": {
+    "return_1y_pct": 31.2,
+    "volatility_ann_pct": 33.7,
+    "last_close": 595.3
+  },
+  "macro": {
+    "ten_year_treasury_pct": 4.25,
+    "fed_funds_rate_pct": 4.33,
+    "cpi_inflation_yoy_pct": 2.7,
+    "unemployment_rate_pct": 4.1,
+    "as_of": "2026-07-01",
+    "source": "FRED (aufgezeichneter Snapshot / illustrativ)"
+  },
+  "news": [
+    {
+      "title": "Meta investiert Milliarden in KI-Infrastruktur",
+      "publisher": "Reuters",
+      "published": "2026-07-01T12:00:00Z",
+      "link": ""
+    },
+    {
+      "title": "Werbeerloese von Meta steigen zweistellig",
+      "publisher": "Bloomberg",
+      "published": "2026-07-01T12:00:00Z",
+      "link": ""
+    },
+    {
+      "title": "Reality-Labs-Sparte weiter defizitaer",
+      "publisher": "CNBC",
+      "published": "2026-07-01T12:00:00Z",
+      "link": ""
+    }
+  ],
+  "collected_at": "2026-07-01T12:00:00+00:00",
+  "data_source": "fixture"
+}

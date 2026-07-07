@@ -1,0 +1,69 @@
+{
+  "note": "Aufgezeichneter, illustrativer Daten-Snapshot fuer Offline-Tests und Evals. Werte sind NICHT aktuell - fuer echte Analysen den Live-Modus verwenden.",
+  "fundamentals": {
+    "ticker": "XOM",
+    "name": "Exxon Mobil Corporation",
+    "sector": "Energy",
+    "industry": "Oil & Gas Integrated",
+    "currency": "USD",
+    "metrics": {
+      "price": 112.4,
+      "market_cap": 494000000000.0,
+      "trailing_pe": 13.8,
+      "forward_pe": 13.1,
+      "price_to_book": 1.8,
+      "price_to_sales": 1.4,
+      "ev_to_ebitda": 6.9,
+      "peg_ratio": null,
+      "profit_margin": 0.101,
+      "operating_margin": 0.125,
+      "gross_margin": 0.318,
+      "revenue_growth": -0.012,
+      "earnings_growth": -0.211,
+      "return_on_equity": 0.132,
+      "debt_to_equity": 16.4,
+      "current_ratio": 1.31,
+      "free_cashflow": 30000000000.0,
+      "total_revenue": 344000000000.0,
+      "dividend_yield": 0.0352,
+      "beta": 0.88,
+      "fifty_two_week_high": 126.34,
+      "fifty_two_week_low": 103.67
+    }
+  },
+  "price_stats": {
+    "return_1y_pct": -4.2,
+    "volatility_ann_pct": 20.6,
+    "last_close": 112.4
+  },
+  "macro": {
+    "ten_year_treasury_pct": 4.25,
+    "fed_funds_rate_pct": 4.33,
+    "cpi_inflation_yoy_pct": 2.7,
+    "unemployment_rate_pct": 4.1,
+    "as_of": "2026-07-01",
+    "source": "FRED (aufgezeichneter Snapshot / illustrativ)"
+  },
+  "news": [
+    {
+      "title": "Exxon steigert Foerderung im Permian Basin",
+      "publisher": "Reuters",
+      "published": "2026-07-01T12:00:00Z",
+      "link": ""
+    },
+    {
+      "title": "Oelpreise belasten Quartalsergebnis",
+      "publisher": "Bloomberg",
+      "published": "2026-07-01T12:00:00Z",
+      "link": ""
+    },
+    {
+      "title": "Exxon investiert in CO2-Abscheidung",
+      "publisher": "CNBC",
+      "published": "2026-07-01T12:00:00Z",
+      "link": ""
+    }
+  ],
+  "collected_at": "2026-07-01T12:00:00+00:00",
+  "data_source": "fixture"
+}

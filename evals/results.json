@@ -1,0 +1,236 @@
+{
+  "run_at": "2026-07-07T21:06:47+00:00",
+  "version": "0.1.0",
+  "mode": "offline (Fixtures + regelbasierter Template-Analyst)",
+  "note": "Dieser Lauf verwendet aufgezeichnete Daten-Snapshots und den deterministischen Offline-Analysten. Er validiert die komplette Pipeline-Mechanik (Sektionen, Kennzahlen-Konsistenz, Zahlen-Herkunft). Fuer einen Lauf gegen die echte Anthropic API: --live mit gesetzten Keys.",
+  "tickers": 10,
+  "passed": 10,
+  "pass_rate": 100.0,
+  "checks_definition": {
+    "sections": "Alle Pflicht-Sektionen und der Disclaimer sind im Markdown enthalten.",
+    "metrics_table": "Zahlwerte der Kennzahlenuebersicht stimmen mit den Rohdaten ueberein (relative Toleranz 0.5 % + Rundungstoleranz).",
+    "hallucinations": "Jede Zahl im Analysten-Text ist auf einen Rohdatenwert zurueckfuehrbar (relative Toleranz 5 %)."
+  },
+  "results": [
+    {
+      "ticker": "AAPL",
+      "mode": "template",
+      "model": "template (offline, ohne LLM)",
+      "checks": {
+        "sections": {
+          "ok": true,
+          "missing": []
+        },
+        "metrics_table": {
+          "ok": true,
+          "values_checked": 24,
+          "mismatches": []
+        },
+        "hallucinations": {
+          "ok": true,
+          "numbers_checked": 29,
+          "unmatched": []
+        }
+      },
+      "passed": true
+    },
+    {
+      "ticker": "MSFT",
+      "mode": "template",
+      "model": "template (offline, ohne LLM)",
+      "checks": {
+        "sections": {
+          "ok": true,
+          "missing": []
+        },
+        "metrics_table": {
+          "ok": true,
+          "values_checked": 24,
+          "mismatches": []
+        },
+        "hallucinations": {
+          "ok": true,
+          "numbers_checked": 29,
+          "unmatched": []
+        }
+      },
+      "passed": true
+    },
+    {
+      "ticker": "GOOGL",
+      "mode": "template",
+      "model": "template (offline, ohne LLM)",
+      "checks": {
+        "sections": {
+          "ok": true,
+          "missing": []
+        },
+        "metrics_table": {
+          "ok": true,
+          "values_checked": 24,
+          "mismatches": []
+        },
+        "hallucinations": {
+          "ok": true,
+          "numbers_checked": 29,
+          "unmatched": []
+        }
+      },
+      "passed": true
+    },
+    {
+      "ticker": "AMZN",
+      "mode": "template",
+      "model": "template (offline, ohne LLM)",
+      "checks": {
+        "sections": {
+          "ok": true,
+          "missing": []
+        },
+        "metrics_table": {
+          "ok": true,
+          "values_checked": 23,
+          "mismatches": []
+        },
+        "hallucinations": {
+          "ok": true,
+          "numbers_checked": 26,
+          "unmatched": []
+        }
+      },
+      "passed": true
+    },
+    {
+      "ticker": "NVDA",
+      "mode": "template",
+      "model": "template (offline, ohne LLM)",
+      "checks": {
+        "sections": {
+          "ok": true,
+          "missing": []
+        },
+        "metrics_table": {
+          "ok": true,
+          "values_checked": 24,
+          "mismatches": []
+        },
+        "hallucinations": {
+          "ok": true,
+          "numbers_checked": 29,
+          "unmatched": []
+        }
+      },
+      "passed": true
+    },
+    {
+      "ticker": "META",
+      "mode": "template",
+      "model": "template (offline, ohne LLM)",
+      "checks": {
+        "sections": {
+          "ok": true,
+          "missing": []
+        },
+        "metrics_table": {
+          "ok": true,
+          "values_checked": 24,
+          "mismatches": []
+        },
+        "hallucinations": {
+          "ok": true,
+          "numbers_checked": 29,
+          "unmatched": []
+        }
+      },
+      "passed": true
+    },
+    {
+      "ticker": "TSLA",
+      "mode": "template",
+      "model": "template (offline, ohne LLM)",
+      "checks": {
+        "sections": {
+          "ok": true,
+          "missing": []
+        },
+        "metrics_table": {
+          "ok": true,
+          "values_checked": 23,
+          "mismatches": []
+        },
+        "hallucinations": {
+          "ok": true,
+          "numbers_checked": 28,
+          "unmatched": []
+        }
+      },
+      "passed": true
+    },
+    {
+      "ticker": "JPM",
+      "mode": "template",
+      "model": "template (offline, ohne LLM)",
+      "checks": {
+        "sections": {
+          "ok": true,
+          "missing": []
+        },
+        "metrics_table": {
+          "ok": true,
+          "values_checked": 19,
+          "mismatches": []
+        },
+        "hallucinations": {
+          "ok": true,
+          "numbers_checked": 21,
+          "unmatched": []
+        }
+      },
+      "passed": true
+    },
+    {
+      "ticker": "JNJ",
+      "mode": "template",
+      "model": "template (offline, ohne LLM)",
+      "checks": {
+        "sections": {
+          "ok": true,
+          "missing": []
+        },
+        "metrics_table": {
+          "ok": true,
+          "values_checked": 24,
+          "mismatches": []
+        },
+        "hallucinations": {
+          "ok": true,
+          "numbers_checked": 29,
+          "unmatched": []
+        }
+      },
+      "passed": true
+    },
+    {
+      "ticker": "XOM",
+      "mode": "template",
+      "model": "template (offline, ohne LLM)",
+      "checks": {
+        "sections": {
+          "ok": true,
+          "missing": []
+        },
+        "metrics_table": {
+          "ok": true,
+          "values_checked": 23,
+          "mismatches": []
+        },
+        "hallucinations": {
+          "ok": true,
+          "numbers_checked": 28,
+          "unmatched": []
+        }
+      },
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "note": "Aufgezeichneter, illustrativer Daten-Snapshot fuer Offline-Tests und Evals. Werte sind NICHT aktuell - fuer echte Analysen den Live-Modus verwenden.",
+  "fundamentals": {
+    "ticker": "GOOGL",
+    "name": "Alphabet Inc.",
+    "sector": "Communication Services",
+    "industry": "Internet Content & Information",
+    "currency": "USD",
+    "metrics": {
+      "price": 182.4,
+      "market_cap": 2240000000000.0,
+      "trailing_pe": 24.1,
+      "forward_pe": 21.3,
+      "price_to_book": 7.1,
+      "price_to_sales": 6.4,
+      "ev_to_ebitda": 17.8,
+      "peg_ratio": 1.4,
+      "profit_margin": 0.286,
+      "operating_margin": 0.324,
+      "gross_margin": 0.583,
+      "revenue_growth": 0.135,
+      "earnings_growth": 0.312,
+      "return_on_equity": 0.323,
+      "debt_to_equity": 9.3,
+      "current_ratio": 1.95,
+      "free_cashflow": 61000000000.0,
+      "total_revenue": 350000000000.0,
+      "dividend_yield": 0.0044,
+      "beta": 1.05,
+      "fifty_two_week_high": 193.3,
+      "fifty_two_week_low": 131.55
+    }
+  },
+  "price_stats": {
+    "return_1y_pct": 18.7,
+    "volatility_ann_pct": 24.2,
+    "last_close": 182.4
+  },
+  "macro": {
+    "ten_year_treasury_pct": 4.25,
+    "fed_funds_rate_pct": 4.33,
+    "cpi_inflation_yoy_pct": 2.7,
+    "unemployment_rate_pct": 4.1,
+    "as_of": "2026-07-01",
+    "source": "FRED (aufgezeichneter Snapshot / illustrativ)"
+  },
+  "news": [
+    {
+      "title": "Alphabet meldet starkes Cloud-Wachstum",
+      "publisher": "Reuters",
+      "published": "2026-07-01T12:00:00Z",
+      "link": ""
+    },
+    {
+      "title": "Gemini-Modelle gewinnen Marktanteile",
+      "publisher": "The Verge",
+      "published": "2026-07-01T12:00:00Z",
+      "link": ""
+    },
+    {
+      "title": "Kartellverfahren gegen Google geht in naechste Runde",
+      "publisher": "NYT",
+      "published": "2026-07-01T12:00:00Z",
+      "link": ""
+    }
+  ],
+  "collected_at": "2026-07-01T12:00:00+00:00",
+  "data_source": "fixture"
+}
