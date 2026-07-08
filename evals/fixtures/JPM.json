@@ -1,0 +1,69 @@
+{
+  "note": "Recorded, illustrative data snapshot for offline tests and evals. Values are NOT current - use live mode for real analyses.",
+  "fundamentals": {
+    "ticker": "JPM",
+    "name": "JPMorgan Chase & Co.",
+    "sector": "Financial Services",
+    "industry": "Banks - Diversified",
+    "currency": "USD",
+    "metrics": {
+      "price": 248.6,
+      "market_cap": 700000000000.0,
+      "trailing_pe": 13.5,
+      "forward_pe": 13.9,
+      "price_to_book": 2.1,
+      "price_to_sales": 4.2,
+      "ev_to_ebitda": null,
+      "peg_ratio": 3.1,
+      "profit_margin": 0.349,
+      "operating_margin": 0.438,
+      "gross_margin": null,
+      "revenue_growth": 0.108,
+      "earnings_growth": 0.121,
+      "return_on_equity": 0.169,
+      "debt_to_equity": null,
+      "current_ratio": null,
+      "free_cashflow": null,
+      "total_revenue": 166000000000.0,
+      "dividend_yield": 0.0202,
+      "beta": 1.1,
+      "fifty_two_week_high": 254.31,
+      "fifty_two_week_low": 179.2
+    }
+  },
+  "price_stats": {
+    "return_1y_pct": 26.9,
+    "volatility_ann_pct": 18.4,
+    "last_close": 248.6
+  },
+  "macro": {
+    "ten_year_treasury_pct": 4.25,
+    "fed_funds_rate_pct": 4.33,
+    "cpi_inflation_yoy_pct": 2.7,
+    "unemployment_rate_pct": 4.1,
+    "as_of": "2026-07-01",
+    "source": "FRED (recorded snapshot / illustrative)"
+  },
+  "news": [
+    {
+      "title": "JPMorgan beats earnings expectations",
+      "publisher": "Reuters",
+      "published": "2026-07-01T12:00:00Z",
+      "link": ""
+    },
+    {
+      "title": "Investment banking revenues pick up",
+      "publisher": "Bloomberg",
+      "published": "2026-07-01T12:00:00Z",
+      "link": ""
+    },
+    {
+      "title": "JPMorgan warns of credit risks in commercial real estate",
+      "publisher": "FT",
+      "published": "2026-07-01T12:00:00Z",
+      "link": ""
+    }
+  ],
+  "collected_at": "2026-07-01T12:00:00+00:00",
+  "data_source": "fixture"
+}

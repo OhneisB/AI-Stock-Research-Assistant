@@ -1,0 +1,69 @@
+{
+  "note": "Recorded, illustrative data snapshot for offline tests and evals. Values are NOT current - use live mode for real analyses.",
+  "fundamentals": {
+    "ticker": "TSLA",
+    "name": "Tesla, Inc.",
+    "sector": "Consumer Cyclical",
+    "industry": "Auto Manufacturers",
+    "currency": "USD",
+    "metrics": {
+      "price": 248.9,
+      "market_cap": 795000000000.0,
+      "trailing_pe": 68.3,
+      "forward_pe": 57.1,
+      "price_to_book": 11.4,
+      "price_to_sales": 8.2,
+      "ev_to_ebitda": 55.7,
+      "peg_ratio": 3.5,
+      "profit_margin": 0.13,
+      "operating_margin": 0.083,
+      "gross_margin": 0.179,
+      "revenue_growth": 0.021,
+      "earnings_growth": -0.452,
+      "return_on_equity": 0.204,
+      "debt_to_equity": 18.1,
+      "current_ratio": 1.84,
+      "free_cashflow": 3600000000.0,
+      "total_revenue": 97000000000.0,
+      "dividend_yield": null,
+      "beta": 2.29,
+      "fifty_two_week_high": 299.29,
+      "fifty_two_week_low": 138.8
+    }
+  },
+  "price_stats": {
+    "return_1y_pct": -8.6,
+    "volatility_ann_pct": 58.3,
+    "last_close": 248.9
+  },
+  "macro": {
+    "ten_year_treasury_pct": 4.25,
+    "fed_funds_rate_pct": 4.33,
+    "cpi_inflation_yoy_pct": 2.7,
+    "unemployment_rate_pct": 4.1,
+    "as_of": "2026-07-01",
+    "source": "FRED (recorded snapshot / illustrative)"
+  },
+  "news": [
+    {
+      "title": "Tesla cuts prices in several markets",
+      "publisher": "Reuters",
+      "published": "2026-07-01T12:00:00Z",
+      "link": ""
+    },
+    {
+      "title": "Robotaxi plans: Tesla shares new details",
+      "publisher": "Electrek",
+      "published": "2026-07-01T12:00:00Z",
+      "link": ""
+    },
+    {
+      "title": "Tesla deliveries fall short of expectations",
+      "publisher": "CNBC",
+      "published": "2026-07-01T12:00:00Z",
+      "link": ""
+    }
+  ],
+  "collected_at": "2026-07-01T12:00:00+00:00",
+  "data_source": "fixture"
+}

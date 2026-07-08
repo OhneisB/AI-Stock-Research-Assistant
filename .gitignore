@@ -1,0 +1,35 @@
+# Secrets
+.env
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# Caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+*.sqlite
+
+# Output data (generated reports/docs, not versioned)
+reports/
+output/
+evals/output/
+docs/
+
+# uv
+uv.lock
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
