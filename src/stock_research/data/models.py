@@ -1,12 +1,12 @@
-"""Datenmodelle fuer alle gesammelten Rohdaten."""
+"""Data models for all collected raw data."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass, field, asdict
 from typing import Any
 
-# Kennzahlen, die aus dem yfinance-Info-Dict extrahiert werden.
-# Mapping: unser Feldname -> yfinance-Key
+# Metrics extracted from the yfinance info dict.
+# Mapping: our field name -> yfinance key
 FUNDAMENTAL_FIELDS: dict[str, str] = {
     "price": "currentPrice",
     "market_cap": "marketCap",
@@ -32,7 +32,7 @@ FUNDAMENTAL_FIELDS: dict[str, str] = {
     "fifty_two_week_low": "fiftyTwoWeekLow",
 }
 
-# Felder, die yfinance als Dezimalbruch liefert (0.25 = 25 %)
+# Fields that yfinance reports as decimal fractions (0.25 = 25 %)
 PERCENT_FIELDS = {
     "profit_margin",
     "operating_margin",
@@ -58,7 +58,7 @@ class Fundamentals:
 
 @dataclass
 class PriceStats:
-    """Aus der Kurshistorie abgeleitete Statistiken (1 Jahr)."""
+    """Statistics derived from the price history (1 year)."""
 
     return_1y_pct: float | None = None
     volatility_ann_pct: float | None = None
@@ -70,7 +70,7 @@ class PriceStats:
 
 @dataclass
 class MacroData:
-    """Makro-Kontext aus der FRED API."""
+    """Macro context from the FRED API."""
 
     ten_year_treasury_pct: float | None = None
     fed_funds_rate_pct: float | None = None
@@ -96,14 +96,14 @@ class NewsItem:
 
 @dataclass
 class DataBundle:
-    """Alle Rohdaten fuer einen Ticker - Input fuer die Analyse-Pipeline."""
+    """All raw data for one ticker - input for the analysis pipeline."""
 
     fundamentals: Fundamentals
     price_stats: PriceStats
     macro: MacroData
     news: list[NewsItem]
     collected_at: str = ""
-    data_source: str = "live"  # "live" oder "fixture"
+    data_source: str = "live"  # "live" or "fixture"
 
     def to_dict(self) -> dict[str, Any]:
         return {

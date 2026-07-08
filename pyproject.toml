@@ -1,7 +1,7 @@
 [project]
 name = "ai-stock-research-assistant"
 version = "0.1.0"
-description = "KI-gestuetzter Aktien-Research-Assistent: sammelt Kurs-, Fundamental-, Makro- und News-Daten und erstellt Analysten-Memos mit der Anthropic API."
+description = "AI-powered stock research assistant: collects price, fundamental, macro and news data and generates analyst memos with the Anthropic API."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { file = "LICENSE" }

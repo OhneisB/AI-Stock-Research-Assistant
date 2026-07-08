@@ -1,1 +1,1 @@
-"""Analyse-Pipeline: Prompts, Anthropic-Anbindung und Offline-Analyst."""
+"""Analysis pipeline: prompts, Anthropic integration and offline analyst."""

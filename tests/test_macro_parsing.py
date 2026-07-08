@@ -1,4 +1,4 @@
-"""Tests fuer das Parsing der FRED-API-Antworten (ohne Netzwerk)."""
+"""Tests for parsing FRED API responses (no network)."""
 
 from stock_research.data.macro import latest_value, parse_observations, yoy_change_pct
 
@@ -20,7 +20,7 @@ def test_latest_value():
 
 
 def test_yoy_change_pct():
-    # 13 Monatswerte: 100 -> 103 entspricht +3.0 %
+    # 13 monthly values: 100 -> 103 equals +3.0 %
     values = [(f"2025-{m:02d}-01", "100") for m in range(1, 13)] + [("2026-01-01", "103")]
     assert yoy_change_pct(_payload(values)) == 3.0
 

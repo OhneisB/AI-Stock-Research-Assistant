@@ -1,16 +1,17 @@
 """AI Stock Research Assistant.
 
-KI-gestuetzter Aktien-Research-Assistent: sammelt Kursdaten, Fundamentals,
-Makro-Kontext und News und erstellt strukturierte Research-Memos.
+AI-powered stock research assistant: collects price data, fundamentals,
+macro context and news, and generates structured research memos.
 """
 
 __version__ = "0.1.0"
 
 DISCLAIMER = (
-    "**Disclaimer:** Dieses Dokument wurde automatisiert mit Hilfe eines "
-    "KI-Sprachmodells erstellt und dient ausschliesslich zu Informations- und "
-    "Ausbildungszwecken. Es stellt KEINE Anlageberatung, Kauf- oder "
-    "Verkaufsempfehlung dar. Kennzahlen koennen fehlerhaft, unvollstaendig oder "
-    "veraltet sein. Triff keine Anlageentscheidung auf Basis dieses Dokuments, "
-    "ohne eigene Recherche durchzufuehren und ggf. professionellen Rat einzuholen."
+    "**Disclaimer:** This document was generated automatically with the help of "
+    "an AI language model and is provided for informational and educational "
+    "purposes only. It does NOT constitute investment advice or a recommendation "
+    "to buy or sell any security. Metrics may be inaccurate, incomplete, or "
+    "outdated. Do not make any investment decision based on this document "
+    "without doing your own research and, where appropriate, consulting a "
+    "professional advisor."
 )

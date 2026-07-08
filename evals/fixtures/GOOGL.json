@@ -1,5 +1,5 @@
 {
-  "note": "Aufgezeichneter, illustrativer Daten-Snapshot fuer Offline-Tests und Evals. Werte sind NICHT aktuell - fuer echte Analysen den Live-Modus verwenden.",
+  "note": "Recorded, illustrative data snapshot for offline tests and evals. Values are NOT current - use live mode for real analyses.",
   "fundamentals": {
     "ticker": "GOOGL",
     "name": "Alphabet Inc.",
@@ -42,23 +42,23 @@
     "cpi_inflation_yoy_pct": 2.7,
     "unemployment_rate_pct": 4.1,
     "as_of": "2026-07-01",
-    "source": "FRED (aufgezeichneter Snapshot / illustrativ)"
+    "source": "FRED (recorded snapshot / illustrative)"
   },
   "news": [
     {
-      "title": "Alphabet meldet starkes Cloud-Wachstum",
+      "title": "Alphabet reports strong cloud growth",
       "publisher": "Reuters",
       "published": "2026-07-01T12:00:00Z",
       "link": ""
     },
     {
-      "title": "Gemini-Modelle gewinnen Marktanteile",
+      "title": "Gemini models gain market share",
       "publisher": "The Verge",
       "published": "2026-07-01T12:00:00Z",
       "link": ""
     },
     {
-      "title": "Kartellverfahren gegen Google geht in naechste Runde",
+      "title": "Google antitrust case enters next round",
       "publisher": "NYT",
       "published": "2026-07-01T12:00:00Z",
       "link": ""

@@ -1,5 +1,5 @@
 {
-  "note": "Aufgezeichneter, illustrativer Daten-Snapshot fuer Offline-Tests und Evals. Werte sind NICHT aktuell - fuer echte Analysen den Live-Modus verwenden.",
+  "note": "Recorded, illustrative data snapshot for offline tests and evals. Values are NOT current - use live mode for real analyses.",
   "fundamentals": {
     "ticker": "AMZN",
     "name": "Amazon.com, Inc.",
@@ -42,23 +42,23 @@
     "cpi_inflation_yoy_pct": 2.7,
     "unemployment_rate_pct": 4.1,
     "as_of": "2026-07-01",
-    "source": "FRED (aufgezeichneter Snapshot / illustrativ)"
+    "source": "FRED (recorded snapshot / illustrative)"
   },
   "news": [
     {
-      "title": "AWS kuendigt neue KI-Chips an",
+      "title": "AWS announces new AI chips",
       "publisher": "Reuters",
       "published": "2026-07-01T12:00:00Z",
       "link": ""
     },
     {
-      "title": "Amazon weitet Same-Day-Lieferung aus",
+      "title": "Amazon expands same-day delivery",
       "publisher": "CNBC",
       "published": "2026-07-01T12:00:00Z",
       "link": ""
     },
     {
-      "title": "Werbegeschaeft von Amazon waechst kraeftig",
+      "title": "Amazon's advertising business grows strongly",
       "publisher": "Bloomberg",
       "published": "2026-07-01T12:00:00Z",
       "link": ""

@@ -1,16 +1,16 @@
-"""Eval-Suite: analysiert 10 bekannte Ticker und prueft die Reports automatisiert.
+"""Eval suite: analyzes 10 well-known tickers and checks the reports automatically.
 
-Checks pro Ticker (Details in stock_research.evalchecks):
-  (a) alle Pflicht-Sektionen + Disclaimer vorhanden
-  (b) Kennzahlen im Report stimmen mit den Rohdaten ueberein (Toleranzpruefung)
-  (c) keine halluzinierten Zahlen im Analysten-Text
+Checks per ticker (details in stock_research.evalchecks):
+  (a) all mandatory sections + disclaimer present
+  (b) metrics in the report match the raw data (tolerance check)
+  (c) no hallucinated numbers in the analyst text
 
-Ausfuehrung:
-  python evals/run_evals.py            # Offline: Fixtures + Template-Analyst
-  python evals/run_evals.py --live     # Live: yfinance/FRED + Anthropic API
-                                       # (benoetigt Netzwerk + API-Keys)
+Usage:
+  python evals/run_evals.py            # offline: fixtures + template analyst
+  python evals/run_evals.py --live     # live: yfinance/FRED + Anthropic API
+                                       # (requires network + API keys)
 
-Ergebnis: evals/results.json
+Result: evals/results.json
 """
 
 from __future__ import annotations
@@ -75,7 +75,7 @@ def evaluate_ticker(ticker: str, live: bool, deep: bool) -> dict:
             },
         })
         entry["passed"] = sections_ok and metrics_ok and halluc.ok
-    except Exception as exc:  # Fehler zaehlen als Fail, brechen die Suite aber nicht ab
+    except Exception as exc:  # errors count as fail but do not abort the suite
         entry["error"] = f"{type(exc).__name__}: {exc}"
         entry["passed"] = False
     return entry
@@ -84,13 +84,13 @@ def evaluate_ticker(ticker: str, live: bool, deep: bool) -> dict:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--live", action="store_true",
-                        help="Live-Daten (yfinance/FRED) und Anthropic API verwenden")
-    parser.add_argument("--deep", action="store_true", help="Deep-Modus testen")
+                        help="Use live data (yfinance/FRED) and the Anthropic API")
+    parser.add_argument("--deep", action="store_true", help="Test deep mode")
     args = parser.parse_args(argv)
 
     settings = get_settings()
     if args.live and not settings.has_anthropic:
-        print("--live benoetigt ANTHROPIC_API_KEY.", file=sys.stderr)
+        print("--live requires ANTHROPIC_API_KEY.", file=sys.stderr)
         return 2
 
     results = []
@@ -103,28 +103,28 @@ def main(argv: list[str] | None = None) -> int:
         "run_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
         "version": __version__,
         "mode": "live (yfinance/FRED + Anthropic API)" if args.live
-                else "offline (Fixtures + regelbasierter Template-Analyst)",
+                else "offline (fixtures + rule-based template analyst)",
         "note": (None if args.live else
-                 "Dieser Lauf verwendet aufgezeichnete Daten-Snapshots und den "
-                 "deterministischen Offline-Analysten. Er validiert die komplette "
-                 "Pipeline-Mechanik (Sektionen, Kennzahlen-Konsistenz, Zahlen-Herkunft). "
-                 "Fuer einen Lauf gegen die echte Anthropic API: --live mit gesetzten Keys."),
+                 "This run uses recorded data snapshots and the deterministic "
+                 "offline analyst. It validates the complete pipeline mechanics "
+                 "(sections, metric consistency, number provenance). For a run "
+                 "against the real Anthropic API: --live with keys configured."),
         "tickers": len(results),
         "passed": passed,
         "pass_rate": round(passed / len(results) * 100, 1),
         "checks_definition": {
-            "sections": "Alle Pflicht-Sektionen und der Disclaimer sind im Markdown enthalten.",
-            "metrics_table": "Zahlwerte der Kennzahlenuebersicht stimmen mit den Rohdaten "
-                             "ueberein (relative Toleranz 0.5 % + Rundungstoleranz).",
-            "hallucinations": "Jede Zahl im Analysten-Text ist auf einen Rohdatenwert "
-                              "zurueckfuehrbar (relative Toleranz 5 %).",
+            "sections": "All mandatory sections and the disclaimer are present in the Markdown.",
+            "metrics_table": "Numeric values of the key-metrics table match the raw data "
+                             "(relative tolerance 0.5 % + rounding tolerance).",
+            "hallucinations": "Every number in the analyst text can be traced back to a "
+                              "raw-data value (relative tolerance 5 %).",
         },
         "results": results,
     }
     RESULTS_PATH.write_text(json.dumps(summary, indent=2, ensure_ascii=False),
                             encoding="utf-8")
 
-    print(f"\nErgebnis: {passed}/{len(results)} Ticker bestanden "
+    print(f"\nResult: {passed}/{len(results)} tickers passed "
           f"({summary['pass_rate']} %) -> {RESULTS_PATH}")
     for r in results:
         status = "PASS" if r["passed"] else "FAIL"

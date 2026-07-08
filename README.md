@@ -1,65 +1,66 @@
 # AI Stock Research Assistant
 
-KI-gestützter Aktien-Research-Assistent als CLI-Tool (plus optionalem lokalem Web-UI).
-Aus einem Ticker-Symbol entsteht ein strukturiertes Research-Memo im Stil eines
-Analysten-Reports – auf Basis von Kursdaten, Fundamentals, Makro-Kontext und News.
+AI-powered stock research assistant as a CLI tool (plus an optional local web UI).
+From a single ticker symbol it produces a structured research memo in the style
+of an analyst report — based on price data, fundamentals, macro context and news.
 
-> **Disclaimer:** Dieses Projekt ist ein Werkzeug zu Informations- und
-> Ausbildungszwecken. Es liefert **keine Anlageberatung** und keine Kauf- oder
-> Verkaufsempfehlungen. Jeder generierte Report enthält einen entsprechenden
-> Disclaimer. KI-generierte Analysen können Fehler enthalten.
+> **Disclaimer:** This project is a tool for informational and educational
+> purposes. It provides **no investment advice** and no buy or sell
+> recommendations. Every generated report includes a corresponding disclaimer.
+> AI-generated analyses can contain errors.
 
 ## Features
 
-- **Ein Befehl, ein Memo:** `research AAPL` sammelt automatisch alle Daten und
-  erzeugt ein Markdown-Memo unter `reports/` plus eine JSON-Datei mit allen Rohkennzahlen.
-- **Datenquellen:**
-  - Kursdaten & Fundamentals (Bewertung, Wachstum, Margen, Verschuldung) via **yfinance**
-  - Makro-Kontext (10J-Rendite, Leitzins, CPI-Inflation, Arbeitslosenquote) via **FRED API**
-  - Aktuelle Unternehmens-News via **yfinance-News-Feed**
-- **Vierstufige KI-Analyse-Pipeline** (Anthropic API, Default-Modell `claude-sonnet-5`):
-  1. Fundamentalanalyse (Bewertungskennzahlen, Wachstum, Margen, Verschuldung)
-  2. Qualitative Einschätzung (Moat, Risiken, Branchenlage)
-  3. Bull Case / Bear Case
-  4. Zusammenfassendes Research-Memo (Executive Summary)
-- **Deterministische Kennzahlen-Tabelle:** Die Kennzahlenübersicht jedes Reports wird
-  direkt aus den Rohdaten gerendert (nicht vom LLM) und ist damit garantiert konsistent.
-- **Offline-Modus:** `--offline` nutzt aufgezeichnete Daten-Snapshots und einen
-  regelbasierten Template-Analysten – für Tests, Evals und Umgebungen ohne API-Keys.
-- **Eval-Suite:** automatisierte Qualitätsprüfung über 10 bekannte Ticker
-  (Pflicht-Sektionen, Kennzahlen-Toleranzprüfung, Halluzinations-Check).
-- **Optionales Web-UI:** lokales Flask-Interface unter `http://127.0.0.1:5000`.
+- **One command, one memo:** `research AAPL` automatically collects all data and
+  produces a Markdown memo under `reports/` plus a JSON file with all raw metrics.
+- **Data sources:**
+  - Price data & fundamentals (valuation, growth, margins, leverage) via **yfinance**
+  - Macro context (10Y yield, fed funds rate, CPI inflation, unemployment) via the **FRED API**
+  - Recent company news via the **yfinance news feed**
+- **Four-stage AI analysis pipeline** (Anthropic API, default model `claude-sonnet-5`):
+  1. Fundamental analysis (valuation metrics, growth, margins, leverage)
+  2. Qualitative assessment (moat, risks, industry landscape)
+  3. Bull case / bear case
+  4. Summarizing research memo (executive summary)
+- **Deterministic metrics table:** the key-metrics table of every report is
+  rendered directly from the raw data (not by the LLM) and is therefore
+  guaranteed to be consistent.
+- **Offline mode:** `--offline` uses recorded data snapshots and a rule-based
+  template analyst — for tests, evals and environments without API keys.
+- **Eval suite:** automated quality checks across 10 well-known tickers
+  (mandatory sections, metric tolerance check, hallucination check).
+- **Optional web UI:** local Flask interface at `http://127.0.0.1:5000`.
 
-## Architektur
+## Architecture
 
 ```mermaid
 flowchart LR
     subgraph Input
-        T[Ticker-Symbol]
+        T[Ticker symbol]
     end
 
-    subgraph Datenbeschaffung
-        YF[yfinance<br/>Kurse + Fundamentals]
-        FRED[FRED API<br/>Zinsen + Inflation]
-        NEWS[yfinance News-Feed]
-        FIX[(Fixtures<br/>Offline-Snapshots)]
+    subgraph DataAcquisition["Data acquisition"]
+        YF[yfinance<br/>prices + fundamentals]
+        FRED[FRED API<br/>rates + inflation]
+        NEWS[yfinance news feed]
+        FIX[(Fixtures<br/>offline snapshots)]
     end
 
-    subgraph Pipeline["Analyse-Pipeline (Anthropic API, claude-sonnet-5)"]
-        S1[1. Fundamentalanalyse]
-        S2[2. Qualitative Einschätzung]
-        S3[3. Bull / Bear Case]
-        S4[4. Research-Memo]
-        TA[Offline: Template-Analyst<br/>regelbasiert, ohne LLM]
+    subgraph Pipeline["Analysis pipeline (Anthropic API, claude-sonnet-5)"]
+        S1[1. Fundamental analysis]
+        S2[2. Qualitative assessment]
+        S3[3. Bull / bear case]
+        S4[4. Research memo]
+        TA[Offline: template analyst<br/>rule-based, no LLM]
     end
 
     subgraph Output
-        MD[reports/TICKER_DATUM.md<br/>Markdown-Memo + Disclaimer]
-        JS[reports/TICKER_DATUM.json<br/>alle Rohkennzahlen]
+        MD[reports/TICKER_DATE.md<br/>Markdown memo + disclaimer]
+        JS[reports/TICKER_DATE.json<br/>all raw metrics]
     end
 
     subgraph Evals
-        EV[evals/run_evals.py<br/>Sektionen + Kennzahlen + Halluzinationscheck]
+        EV[evals/run_evals.py<br/>sections + metrics + hallucination check]
         RES[evals/results.json]
     end
 
@@ -76,136 +77,136 @@ flowchart LR
 
 ## Setup
 
-Voraussetzungen: Python ≥ 3.11 und [uv](https://docs.astral.sh/uv/).
+Requirements: Python ≥ 3.11 and [uv](https://docs.astral.sh/uv/).
 
 ```bash
-git clone https://github.com/OhneisB/ai-stock-research-assistant.git
-cd ai-stock-research-assistant
+git clone https://github.com/OhneisB/AI-Stock-Research-Assistant.git
+cd AI-Stock-Research-Assistant
 
-# Virtuelle Umgebung + Installation
+# Virtual environment + installation
 uv venv
-uv pip install -e ".[dev]"        # dev enthält pytest, reportlab, flask
+uv pip install -e ".[dev]"        # dev includes pytest, reportlab, flask
 source .venv/bin/activate
 
-# API-Keys konfigurieren (niemals committen!)
+# Configure API keys (never commit them!)
 cp .env.example .env
-# .env editieren: ANTHROPIC_API_KEY und FRED_API_KEY eintragen
+# edit .env: add ANTHROPIC_API_KEY and FRED_API_KEY
 ```
 
-Alle Secrets werden ausschließlich über Umgebungsvariablen bzw. die lokale
-`.env`-Datei geladen (python-dotenv). `.env` ist per `.gitignore` ausgeschlossen.
+All secrets are loaded exclusively from environment variables or the local
+`.env` file (python-dotenv). `.env` is excluded via `.gitignore`.
 
 ## Usage
 
 ```bash
-research AAPL                  # Standard-Analyse für Apple
-research AAPL --deep           # ausführlichere Analyse (längere Sektionen)
-research --compare AAPL MSFT   # Vergleichsreport über beide Ticker
-research AAPL --offline        # Offline-Modus (Fixtures + Template-Analyst)
-research AAPL --out ./memos    # eigenes Zielverzeichnis
+research AAPL                  # standard analysis for Apple
+research AAPL --deep           # more detailed analysis (longer sections)
+research --compare AAPL MSFT   # comparison report across both tickers
+research AAPL --offline        # offline mode (fixtures + template analyst)
+research AAPL --out ./memos    # custom output directory
 ```
 
-Ausgabe pro Ticker:
+Output per ticker:
 
-- `reports/AAPL_YYYY-MM-DD.md` – strukturiertes Research-Memo mit Disclaimer,
-  Executive Summary, Kennzahlenübersicht, Makro-Umfeld, Fundamentalanalyse,
-  qualitativer Einschätzung, Bull/Bear Case und News
-- `reports/AAPL_YYYY-MM-DD.json` – alle Rohkennzahlen, Makro-Daten, News und
-  die generierten Sektionen (maschinenlesbar)
+- `reports/AAPL_YYYY-MM-DD.md` — structured research memo with disclaimer,
+  executive summary, key-metrics table, macro environment, fundamental
+  analysis, qualitative assessment, bull/bear case and news
+- `reports/AAPL_YYYY-MM-DD.json` — all raw metrics, macro data, news and the
+  generated sections (machine-readable)
 
-Ohne gesetzten `ANTHROPIC_API_KEY` fällt das Tool automatisch auf den
-regelbasierten Offline-Analysten zurück (mit deutlichem Hinweis im Report).
+Without an `ANTHROPIC_API_KEY` the tool automatically falls back to the
+rule-based offline analyst (with a clear note in the report).
 
-### Web-UI (optional)
+### Web UI (optional)
 
 ```bash
 python -m stock_research.webapp
-# dann im Browser: http://127.0.0.1:5000
+# then open http://127.0.0.1:5000 in your browser
 ```
 
-## Validierung (Eval-Suite)
+## Validation (eval suite)
 
-Statt eines klassischen Backtests prüft die Eval-Suite die **Qualität der
-generierten Reports** über 10 bekannte Ticker (AAPL, MSFT, GOOGL, AMZN, NVDA,
-META, TSLA, JPM, JNJ, XOM):
+Instead of a classic backtest, the eval suite checks the **quality of the
+generated reports** across 10 well-known tickers (AAPL, MSFT, GOOGL, AMZN,
+NVDA, META, TSLA, JPM, JNJ, XOM):
 
-| Check | Kriterium |
+| Check | Criterion |
 |---|---|
-| (a) Sektionen | Alle Pflicht-Sektionen und der Disclaimer sind im Markdown enthalten |
-| (b) Kennzahlen | Werte der Kennzahlenübersicht stimmen mit den yfinance-Rohdaten überein (relative Toleranz 0.5 % + Rundungstoleranz) |
-| (c) Halluzinationen | Jede Zahl im Analysten-Text lässt sich auf einen Rohdatenwert zurückführen (relative Toleranz 5 %) |
+| (a) Sections | All mandatory sections and the disclaimer are present in the Markdown |
+| (b) Metrics | Values in the key-metrics table match the yfinance raw data (relative tolerance 0.5 % + rounding tolerance) |
+| (c) Hallucinations | Every number in the analyst text can be traced back to a raw-data value (relative tolerance 5 %) |
 
 ```bash
-python evals/run_evals.py          # offline (Fixtures + Template-Analyst)
+python evals/run_evals.py          # offline (fixtures + template analyst)
 python evals/run_evals.py --live   # live (yfinance/FRED + Anthropic API)
 ```
 
-**Aktuelles Ergebnis** (committeter Lauf, siehe [`evals/results.json`](evals/results.json)):
-**10/10 Ticker bestanden (Trefferquote 100 %)** – alle Pflicht-Sektionen vorhanden,
-alle geprüften Kennzahlen innerhalb der Toleranz, keine unbelegten Zahlen.
+**Current result** (committed run, see [`evals/results.json`](evals/results.json)):
+**10/10 tickers passed (pass rate 100 %)** — all mandatory sections present,
+all checked metrics within tolerance, no unsubstantiated numbers.
 
-*Transparenz-Hinweis:* Der committete Lauf wurde im **Offline-Modus** erzeugt
-(aufgezeichnete Daten-Snapshots + deterministischer Template-Analyst), da die
-Build-Umgebung keinen Zugriff auf Yahoo/FRED/Anthropic hatte. Er validiert die
-komplette Pipeline-Mechanik inklusive aller drei Checks. Mit eigenen API-Keys
-lässt sich derselbe Lauf jederzeit mit `--live` gegen die echte Anthropic API
-und Live-Daten wiederholen; die Checks sind identisch und gerade für den
-LLM-Fall gedacht (Halluzinations-Check).
+*Transparency note:* The committed run was produced in **offline mode**
+(recorded data snapshots + deterministic template analyst) because the build
+environment had no access to Yahoo/FRED/Anthropic. It validates the complete
+pipeline mechanics including all three checks. With your own API keys the same
+run can be repeated at any time with `--live` against the real Anthropic API
+and live data; the checks are identical and are designed precisely for the LLM
+case (hallucination check).
 
 ## Tests & CI
 
 ```bash
-pytest            # 22 Unit-/Integrationstests, komplett offline lauffähig
+pytest            # 22 unit/integration tests, fully runnable offline
 ```
 
-Die Tests decken Datenparsing (yfinance-Info, FRED-Observations, beide
-yfinance-News-Formate), Kennzahlen-Formatierung, Report-Generierung, CLI und
-die Eval-Checks ab. Ein GitHub-Actions-Workflow
-([`.github/workflows/tests.yml`](.github/workflows/tests.yml)) führt sie bei
-jedem Push und Pull Request aus.
+The tests cover data parsing (yfinance info, FRED observations, both yfinance
+news formats), metric formatting, report generation, the CLI and the eval
+checks. A GitHub Actions workflow
+([`.github/workflows/tests.yml`](.github/workflows/tests.yml)) runs them on
+every push and pull request.
 
-## Projektstruktur
+## Project structure
 
 ```
 src/stock_research/
 ├── cli.py              # CLI: research TICKER [--deep] [--compare] [--offline]
-├── config.py           # Settings aus Umgebungsvariablen / .env
-├── report.py           # Markdown-Memo + JSON-Rohdaten
-├── evalchecks.py       # Qualitätschecks (Sektionen, Kennzahlen, Halluzinationen)
-├── webapp.py           # optionales Flask-Web-UI
+├── config.py           # settings from environment variables / .env
+├── report.py           # Markdown memo + JSON raw data
+├── evalchecks.py       # quality checks (sections, metrics, hallucinations)
+├── webapp.py           # optional Flask web UI
 ├── data/
-│   ├── market.py       # yfinance: Kurse + Fundamentals (+ Parsing)
-│   ├── macro.py        # FRED API: Zinsen, Inflation, Arbeitsmarkt
-│   ├── news.py         # yfinance-News-Feed (altes + neues Format)
-│   ├── collect.py      # DataBundle-Sammler (live / Fixture)
-│   └── models.py       # Datenmodelle
+│   ├── market.py       # yfinance: prices + fundamentals (+ parsing)
+│   ├── macro.py        # FRED API: rates, inflation, labor market
+│   ├── news.py         # yfinance news feed (old + new format)
+│   ├── collect.py      # DataBundle collector (live / fixture)
+│   └── models.py       # data models
 └── analysis/
-    ├── prompts.py      # Prompt-Bausteine der 4 Pipeline-Stufen
+    ├── prompts.py      # prompt building blocks of the 4 pipeline stages
     ├── pipeline.py     # ClaudeAnalyst (Anthropic API) + TemplateAnalyst (offline)
-    └── formatting.py   # deterministische Kennzahlen-Formatierung
+    └── formatting.py   # deterministic metric formatting
 
-evals/                  # Eval-Suite, Fixtures und results.json
-tests/                  # pytest-Suite (offline)
-docs/dokumentation.pdf  # ausführliche deutsche Dokumentation
-scripts/generate_pdf.py # erzeugt die PDF-Doku (reportlab)
+evals/                  # eval suite, fixtures and results.json
+tests/                  # pytest suite (offline)
+docs/documentation.pdf  # detailed documentation
+scripts/generate_pdf.py # generates the PDF documentation (reportlab)
 ```
 
-## Limitationen
+## Limitations
 
-- **Keine Anlageberatung.** Die Reports sind automatisiert erzeugte Texte, keine
-  geprüfte Finanzanalyse.
-- **Datenqualität:** yfinance nutzt inoffizielle Yahoo-Finance-Schnittstellen;
-  Kennzahlen können fehlen, verzögert oder fehlerhaft sein (insbesondere bei
-  Banken/Nicht-US-Werten). Fehlende Werte erscheinen als `n/a`.
-- **LLM-Grenzen:** Trotz strikter Prompts und Halluzinations-Check kann das
-  Modell Zusammenhänge falsch interpretieren. Der Check prüft Zahlen, nicht
-  Argumentationslogik.
-- **Makro-Kontext ist US-zentriert** (FRED-Serien: DGS10, FEDFUNDS, CPIAUCSL, UNRATE).
-- **Kein Backtest / keine Prognosegüte:** Die Eval-Suite misst Report-Qualität
-  und Datenkonsistenz, nicht die Vorhersagekraft der Analysen.
-- **Offline-Fixtures sind illustrativ** und nicht aktuell – für echte Analysen
-  immer den Live-Modus verwenden.
+- **Not investment advice.** The reports are automatically generated texts,
+  not audited financial analysis.
+- **Data quality:** yfinance uses unofficial Yahoo Finance endpoints; metrics
+  can be missing, delayed or wrong (especially for banks / non-US stocks).
+  Missing values appear as `n/a`.
+- **LLM limits:** despite strict prompts and the hallucination check, the
+  model can misinterpret relationships. The check validates numbers, not the
+  logic of the argument.
+- **Macro context is US-centric** (FRED series: DGS10, FEDFUNDS, CPIAUCSL, UNRATE).
+- **No backtest / no predictive power:** the eval suite measures report quality
+  and data consistency, not the forecasting quality of the analyses.
+- **Offline fixtures are illustrative** and not current — always use live mode
+  for real analyses.
 
-## Lizenz
+## License
 
-MIT – siehe [LICENSE](LICENSE).
+MIT — see [LICENSE](LICENSE).

@@ -1,7 +1,7 @@
-"""Optionales lokales Web-UI (Flask).
+"""Optional local web UI (Flask).
 
-Start:  python -m stock_research.webapp   (benoetigt: pip install .[web])
-Dann im Browser: http://127.0.0.1:5000
+Start:  python -m stock_research.webapp   (requires: pip install .[web])
+Then open http://127.0.0.1:5000 in your browser.
 """
 
 from __future__ import annotations
@@ -14,7 +14,7 @@ from .data.collect import collect
 from .report import render_markdown
 
 PAGE = """<!doctype html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <title>AI Stock Research Assistant</title>
@@ -30,12 +30,12 @@ PAGE = """<!doctype html>
 </head>
 <body>
 <h1>AI Stock Research Assistant</h1>
-<p class="hint">Keine Anlageberatung &ndash; jeder Report enthaelt einen Disclaimer.</p>
+<p class="hint">Not investment advice &ndash; every report includes a disclaimer.</p>
 <form method="post">
-  <input type="text" name="ticker" placeholder="Ticker, z. B. AAPL" value="{ticker}" required>
+  <input type="text" name="ticker" placeholder="Ticker, e.g. AAPL" value="{ticker}" required>
   <label><input type="checkbox" name="deep" {deep_checked}> deep</label>
   <label><input type="checkbox" name="offline" {offline_checked}> offline</label>
-  <button type="submit">Analysieren</button>
+  <button type="submit">Analyze</button>
 </form>
 {body}
 </body>
@@ -43,7 +43,7 @@ PAGE = """<!doctype html>
 
 
 def create_app():
-    from flask import Flask, request  # lazy import (optionales Extra)
+    from flask import Flask, request  # lazy import (optional extra)
 
     app = Flask(__name__)
 
@@ -61,7 +61,7 @@ def create_app():
                 result = run_pipeline(bundle, analyst, deep=deep)
                 body = f"<pre>{html.escape(render_markdown(bundle, result))}</pre>"
             except Exception as exc:
-                body = f'<p class="error">Fehler: {html.escape(str(exc))}</p>'
+                body = f'<p class="error">Error: {html.escape(str(exc))}</p>'
         return PAGE.format(
             ticker=html.escape(ticker),
             deep_checked="checked" if deep else "",

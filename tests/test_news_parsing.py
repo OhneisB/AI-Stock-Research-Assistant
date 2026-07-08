@@ -1,4 +1,4 @@
-"""Tests fuer das Parsing des yfinance-News-Feeds (altes und neues Format)."""
+"""Tests for parsing the yfinance news feed (old and new format)."""
 
 from stock_research.data.news import parse_news
 
@@ -6,7 +6,7 @@ NEW_FORMAT = [
     {
         "id": "abc",
         "content": {
-            "title": "Beispiel-Schlagzeile",
+            "title": "Example headline",
             "pubDate": "2026-07-01T09:00:00Z",
             "provider": {"displayName": "Reuters"},
             "canonicalUrl": {"url": "https://example.com/a"},
@@ -16,7 +16,7 @@ NEW_FORMAT = [
 
 OLD_FORMAT = [
     {
-        "title": "Alte Schlagzeile",
+        "title": "Old headline",
         "publisher": "Bloomberg",
         "providerPublishTime": 1751360400,
         "link": "https://example.com/b",
@@ -27,7 +27,7 @@ OLD_FORMAT = [
 def test_parse_new_format():
     items = parse_news(NEW_FORMAT)
     assert len(items) == 1
-    assert items[0].title == "Beispiel-Schlagzeile"
+    assert items[0].title == "Example headline"
     assert items[0].publisher == "Reuters"
     assert items[0].link == "https://example.com/a"
     assert items[0].published.startswith("2026-07-01")
@@ -35,7 +35,7 @@ def test_parse_new_format():
 
 def test_parse_old_format():
     items = parse_news(OLD_FORMAT)
-    assert items[0].title == "Alte Schlagzeile"
+    assert items[0].title == "Old headline"
     assert items[0].publisher == "Bloomberg"
     assert items[0].link == "https://example.com/b"
     assert items[0].published.startswith("2025-07-01")

@@ -1,7 +1,7 @@
-"""Zentrale Konfiguration.
+"""Central configuration.
 
-Alle Secrets kommen ausschliesslich aus Umgebungsvariablen (bzw. einer lokalen
-.env-Datei, die via python-dotenv geladen wird). Es gibt keine hardcodierten Keys.
+All secrets come exclusively from environment variables (or a local .env file
+loaded via python-dotenv). There are no hardcoded keys.
 """
 
 from __future__ import annotations

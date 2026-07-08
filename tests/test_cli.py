@@ -1,4 +1,4 @@
-"""CLI-Tests im Offline-Modus (kein Netzwerk, keine API-Keys)."""
+"""CLI tests in offline mode (no network, no API keys)."""
 
 from stock_research.cli import main
 
@@ -10,8 +10,8 @@ def test_cli_offline_single_ticker(tmp_path, capsys):
     raws = list(tmp_path.glob("AAPL_*.json"))
     assert len(reports) == 1 and len(raws) == 1
     content = reports[0].read_text(encoding="utf-8")
-    assert "Research-Memo: Apple Inc. (AAPL)" in content
-    assert "KEINE Anlageberatung" in content
+    assert "Research Memo: Apple Inc. (AAPL)" in content
+    assert "NOT constitute investment advice" in content
 
 
 def test_cli_offline_compare(tmp_path):
@@ -20,7 +20,7 @@ def test_cli_offline_compare(tmp_path):
     compare = list(tmp_path.glob("AAPL_vs_MSFT_*.md"))
     assert len(compare) == 1
     text = compare[0].read_text(encoding="utf-8")
-    assert "Vergleich" in text and "Kennzahlen MSFT" in text
+    assert "Comparison" in text and "Key Metrics MSFT" in text
 
 
 def test_cli_compare_needs_two_tickers(tmp_path):

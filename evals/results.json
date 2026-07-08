@@ -1,21 +1,21 @@
 {
-  "run_at": "2026-07-07T21:06:47+00:00",
+  "run_at": "2026-07-08T13:16:34+00:00",
   "version": "0.1.0",
-  "mode": "offline (Fixtures + regelbasierter Template-Analyst)",
-  "note": "Dieser Lauf verwendet aufgezeichnete Daten-Snapshots und den deterministischen Offline-Analysten. Er validiert die komplette Pipeline-Mechanik (Sektionen, Kennzahlen-Konsistenz, Zahlen-Herkunft). Fuer einen Lauf gegen die echte Anthropic API: --live mit gesetzten Keys.",
+  "mode": "offline (fixtures + rule-based template analyst)",
+  "note": "This run uses recorded data snapshots and the deterministic offline analyst. It validates the complete pipeline mechanics (sections, metric consistency, number provenance). For a run against the real Anthropic API: --live with keys configured.",
   "tickers": 10,
   "passed": 10,
   "pass_rate": 100.0,
   "checks_definition": {
-    "sections": "Alle Pflicht-Sektionen und der Disclaimer sind im Markdown enthalten.",
-    "metrics_table": "Zahlwerte der Kennzahlenuebersicht stimmen mit den Rohdaten ueberein (relative Toleranz 0.5 % + Rundungstoleranz).",
-    "hallucinations": "Jede Zahl im Analysten-Text ist auf einen Rohdatenwert zurueckfuehrbar (relative Toleranz 5 %)."
+    "sections": "All mandatory sections and the disclaimer are present in the Markdown.",
+    "metrics_table": "Numeric values of the key-metrics table match the raw data (relative tolerance 0.5 % + rounding tolerance).",
+    "hallucinations": "Every number in the analyst text can be traced back to a raw-data value (relative tolerance 5 %)."
   },
   "results": [
     {
       "ticker": "AAPL",
       "mode": "template",
-      "model": "template (offline, ohne LLM)",
+      "model": "template (offline, no LLM)",
       "checks": {
         "sections": {
           "ok": true,
@@ -23,12 +23,12 @@
         },
         "metrics_table": {
           "ok": true,
-          "values_checked": 24,
+          "values_checked": 21,
           "mismatches": []
         },
         "hallucinations": {
           "ok": true,
-          "numbers_checked": 29,
+          "numbers_checked": 25,
           "unmatched": []
         }
       },
@@ -37,7 +37,7 @@
     {
       "ticker": "MSFT",
       "mode": "template",
-      "model": "template (offline, ohne LLM)",
+      "model": "template (offline, no LLM)",
       "checks": {
         "sections": {
           "ok": true,
@@ -45,12 +45,12 @@
         },
         "metrics_table": {
           "ok": true,
-          "values_checked": 24,
+          "values_checked": 21,
           "mismatches": []
         },
         "hallucinations": {
           "ok": true,
-          "numbers_checked": 29,
+          "numbers_checked": 25,
           "unmatched": []
         }
       },
@@ -59,7 +59,7 @@
     {
       "ticker": "GOOGL",
       "mode": "template",
-      "model": "template (offline, ohne LLM)",
+      "model": "template (offline, no LLM)",
       "checks": {
         "sections": {
           "ok": true,
@@ -67,12 +67,12 @@
         },
         "metrics_table": {
           "ok": true,
-          "values_checked": 24,
+          "values_checked": 21,
           "mismatches": []
         },
         "hallucinations": {
           "ok": true,
-          "numbers_checked": 29,
+          "numbers_checked": 25,
           "unmatched": []
         }
       },
@@ -81,7 +81,7 @@
     {
       "ticker": "AMZN",
       "mode": "template",
-      "model": "template (offline, ohne LLM)",
+      "model": "template (offline, no LLM)",
       "checks": {
         "sections": {
           "ok": true,
@@ -89,12 +89,12 @@
         },
         "metrics_table": {
           "ok": true,
-          "values_checked": 23,
+          "values_checked": 20,
           "mismatches": []
         },
         "hallucinations": {
           "ok": true,
-          "numbers_checked": 26,
+          "numbers_checked": 22,
           "unmatched": []
         }
       },
@@ -103,7 +103,7 @@
     {
       "ticker": "NVDA",
       "mode": "template",
-      "model": "template (offline, ohne LLM)",
+      "model": "template (offline, no LLM)",
       "checks": {
         "sections": {
           "ok": true,
@@ -111,12 +111,12 @@
         },
         "metrics_table": {
           "ok": true,
-          "values_checked": 24,
+          "values_checked": 21,
           "mismatches": []
         },
         "hallucinations": {
           "ok": true,
-          "numbers_checked": 29,
+          "numbers_checked": 25,
           "unmatched": []
         }
       },
@@ -125,7 +125,7 @@
     {
       "ticker": "META",
       "mode": "template",
-      "model": "template (offline, ohne LLM)",
+      "model": "template (offline, no LLM)",
       "checks": {
         "sections": {
           "ok": true,
@@ -133,12 +133,12 @@
         },
         "metrics_table": {
           "ok": true,
-          "values_checked": 24,
+          "values_checked": 21,
           "mismatches": []
         },
         "hallucinations": {
           "ok": true,
-          "numbers_checked": 29,
+          "numbers_checked": 25,
           "unmatched": []
         }
       },
@@ -147,7 +147,7 @@
     {
       "ticker": "TSLA",
       "mode": "template",
-      "model": "template (offline, ohne LLM)",
+      "model": "template (offline, no LLM)",
       "checks": {
         "sections": {
           "ok": true,
@@ -155,12 +155,12 @@
         },
         "metrics_table": {
           "ok": true,
-          "values_checked": 23,
+          "values_checked": 20,
           "mismatches": []
         },
         "hallucinations": {
           "ok": true,
-          "numbers_checked": 28,
+          "numbers_checked": 24,
           "unmatched": []
         }
       },
@@ -169,7 +169,7 @@
     {
       "ticker": "JPM",
       "mode": "template",
-      "model": "template (offline, ohne LLM)",
+      "model": "template (offline, no LLM)",
       "checks": {
         "sections": {
           "ok": true,
@@ -177,12 +177,12 @@
         },
         "metrics_table": {
           "ok": true,
-          "values_checked": 19,
+          "values_checked": 17,
           "mismatches": []
         },
         "hallucinations": {
           "ok": true,
-          "numbers_checked": 21,
+          "numbers_checked": 19,
           "unmatched": []
         }
       },
@@ -191,7 +191,7 @@
     {
       "ticker": "JNJ",
       "mode": "template",
-      "model": "template (offline, ohne LLM)",
+      "model": "template (offline, no LLM)",
       "checks": {
         "sections": {
           "ok": true,
@@ -199,12 +199,12 @@
         },
         "metrics_table": {
           "ok": true,
-          "values_checked": 24,
+          "values_checked": 21,
           "mismatches": []
         },
         "hallucinations": {
           "ok": true,
-          "numbers_checked": 29,
+          "numbers_checked": 25,
           "unmatched": []
         }
       },
@@ -213,7 +213,7 @@
     {
       "ticker": "XOM",
       "mode": "template",
-      "model": "template (offline, ohne LLM)",
+      "model": "template (offline, no LLM)",
       "checks": {
         "sections": {
           "ok": true,
@@ -221,12 +221,12 @@
         },
         "metrics_table": {
           "ok": true,
-          "values_checked": 23,
+          "values_checked": 20,
           "mismatches": []
         },
         "hallucinations": {
           "ok": true,
-          "numbers_checked": 28,
+          "numbers_checked": 24,
           "unmatched": []
         }
       },

@@ -1,5 +1,5 @@
 {
-  "note": "Aufgezeichneter, illustrativer Daten-Snapshot fuer Offline-Tests und Evals. Werte sind NICHT aktuell - fuer echte Analysen den Live-Modus verwenden.",
+  "note": "Recorded, illustrative data snapshot for offline tests and evals. Values are NOT current - use live mode for real analyses.",
   "fundamentals": {
     "ticker": "TSLA",
     "name": "Tesla, Inc.",
@@ -42,23 +42,23 @@
     "cpi_inflation_yoy_pct": 2.7,
     "unemployment_rate_pct": 4.1,
     "as_of": "2026-07-01",
-    "source": "FRED (aufgezeichneter Snapshot / illustrativ)"
+    "source": "FRED (recorded snapshot / illustrative)"
   },
   "news": [
     {
-      "title": "Tesla senkt Preise in mehreren Maerkten",
+      "title": "Tesla cuts prices in several markets",
       "publisher": "Reuters",
       "published": "2026-07-01T12:00:00Z",
       "link": ""
     },
     {
-      "title": "Robotaxi-Plaene: Tesla nennt neue Details",
+      "title": "Robotaxi plans: Tesla shares new details",
       "publisher": "Electrek",
       "published": "2026-07-01T12:00:00Z",
       "link": ""
     },
     {
-      "title": "Auslieferungszahlen von Tesla unter Erwartungen",
+      "title": "Tesla deliveries fall short of expectations",
       "publisher": "CNBC",
       "published": "2026-07-01T12:00:00Z",
       "link": ""

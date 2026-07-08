@@ -20,7 +20,7 @@ venv/
 .cache/
 *.sqlite
 
-# Output-Daten (generierte Reports, nicht versionieren)
+# Output data (generated reports, not versioned)
 reports/
 output/
 evals/output/
@@ -28,7 +28,7 @@ evals/output/
 # uv
 uv.lock
 
-# OS / Editor
+# OS / editor
 .DS_Store
 .idea/
 .vscode/

@@ -1,4 +1,4 @@
-"""Sammelt alle Rohdaten fuer einen Ticker zu einem DataBundle."""
+"""Collects all raw data for one ticker into a DataBundle."""
 
 from __future__ import annotations
 
@@ -17,11 +17,11 @@ FIXTURES_DIR = Path(__file__).resolve().parents[3] / "evals" / "fixtures"
 
 def collect(ticker: str, settings: Settings, offline: bool = False,
             fixtures_dir: Path | None = None) -> DataBundle:
-    """Sammelt Kurs-, Fundamental-, Makro- und News-Daten.
+    """Collects price, fundamental, macro and news data.
 
-    offline=True laedt einen aufgezeichneten Daten-Snapshot aus evals/fixtures
-    statt live von Yahoo/FRED - fuer Tests, Evals und Umgebungen ohne
-    Netzwerkzugriff auf die Datenquellen.
+    offline=True loads a recorded data snapshot from evals/fixtures instead of
+    fetching live from Yahoo/FRED - for tests, evals and environments without
+    network access to the data sources.
     """
     if offline:
         return load_fixture(ticker, fixtures_dir or FIXTURES_DIR)
@@ -44,8 +44,8 @@ def load_fixture(ticker: str, fixtures_dir: Path) -> DataBundle:
     if not path.exists():
         available = sorted(p.stem for p in fixtures_dir.glob("*.json"))
         raise FileNotFoundError(
-            f"Kein Fixture fuer '{ticker.upper()}' unter {fixtures_dir}. "
-            f"Verfuegbar: {', '.join(available) or '(keine)'}"
+            f"No fixture for '{ticker.upper()}' under {fixtures_dir}. "
+            f"Available: {', '.join(available) or '(none)'}"
         )
     bundle = DataBundle.from_dict(json.loads(path.read_text(encoding="utf-8")))
     bundle.data_source = "fixture"
@@ -53,7 +53,7 @@ def load_fixture(ticker: str, fixtures_dir: Path) -> DataBundle:
 
 
 def save_fixture(bundle: DataBundle, fixtures_dir: Path) -> Path:
-    """Speichert einen Live-Snapshot als Fixture (zum Aktualisieren der Eval-Daten)."""
+    """Saves a live snapshot as a fixture (to refresh the eval data)."""
     fixtures_dir.mkdir(parents=True, exist_ok=True)
     path = fixtures_dir / f"{bundle.fundamentals.ticker}.json"
     path.write_text(json.dumps(bundle.to_dict(), indent=2, ensure_ascii=False), encoding="utf-8")

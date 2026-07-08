@@ -1,5 +1,5 @@
 {
-  "note": "Aufgezeichneter, illustrativer Daten-Snapshot fuer Offline-Tests und Evals. Werte sind NICHT aktuell - fuer echte Analysen den Live-Modus verwenden.",
+  "note": "Recorded, illustrative data snapshot for offline tests and evals. Values are NOT current - use live mode for real analyses.",
   "fundamentals": {
     "ticker": "JPM",
     "name": "JPMorgan Chase & Co.",
@@ -42,23 +42,23 @@
     "cpi_inflation_yoy_pct": 2.7,
     "unemployment_rate_pct": 4.1,
     "as_of": "2026-07-01",
-    "source": "FRED (aufgezeichneter Snapshot / illustrativ)"
+    "source": "FRED (recorded snapshot / illustrative)"
   },
   "news": [
     {
-      "title": "JPMorgan uebertrifft Gewinnerwartungen",
+      "title": "JPMorgan beats earnings expectations",
       "publisher": "Reuters",
       "published": "2026-07-01T12:00:00Z",
       "link": ""
     },
     {
-      "title": "Investmentbanking-Ertraege ziehen an",
+      "title": "Investment banking revenues pick up",
       "publisher": "Bloomberg",
       "published": "2026-07-01T12:00:00Z",
       "link": ""
     },
     {
-      "title": "JPMorgan warnt vor Kreditrisiken im Gewerbeimmobilienmarkt",
+      "title": "JPMorgan warns of credit risks in commercial real estate",
       "publisher": "FT",
       "published": "2026-07-01T12:00:00Z",
       "link": ""

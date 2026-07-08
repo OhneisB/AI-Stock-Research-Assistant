@@ -1,6 +1,6 @@
-"""Erzeugt die deutsche Projekt-Dokumentation als PDF (docs/dokumentation.pdf).
+"""Generates the project documentation as a PDF (docs/documentation.pdf).
 
-Ausfuehrung:  python scripts/generate_pdf.py    (benoetigt: pip install .[docs])
+Usage:  python scripts/generate_pdf.py    (requires: pip install .[docs])
 """
 
 from __future__ import annotations
@@ -23,7 +23,7 @@ from reportlab.platypus import (
     TableStyle,
 )
 
-OUT = Path(__file__).resolve().parents[1] / "docs" / "dokumentation.pdf"
+OUT = Path(__file__).resolve().parents[1] / "docs" / "documentation.pdf"
 
 styles = getSampleStyleSheet()
 H1 = ParagraphStyle("H1x", parent=styles["Heading1"], spaceBefore=18, spaceAfter=8)
@@ -53,101 +53,99 @@ def build() -> None:
         str(OUT), pagesize=A4,
         leftMargin=2.2 * cm, rightMargin=2.2 * cm,
         topMargin=2 * cm, bottomMargin=2 * cm,
-        title="AI Stock Research Assistant – Dokumentation",
+        title="AI Stock Research Assistant – Documentation",
         author="AI Stock Research Assistant",
     )
     e: list = []
 
-    # Titel
+    # Title
     e.append(Paragraph("AI Stock Research Assistant", styles["Title"]))
-    e.append(p(f"<i>Technische Dokumentation – Stand {dt.date.today().isoformat()}</i>"))
+    e.append(p(f"<i>Technical documentation – as of {dt.date.today().isoformat()}</i>"))
     e.append(Spacer(1, 6))
     e.append(p(
-        "<b>Wichtiger Hinweis:</b> Dieses Werkzeug und alle damit erzeugten "
-        "Reports dienen ausschließlich Informations- und Ausbildungszwecken. "
-        "Sie stellen <b>keine Anlageberatung</b> und keine Kauf- oder "
-        "Verkaufsempfehlung dar. KI-generierte Analysen können Fehler enthalten. "
-        "Zielgruppe dieser Dokumentation: technisch interessierte Privatanleger.",
+        "<b>Important note:</b> This tool and all reports generated with it are "
+        "provided for informational and educational purposes only. They do "
+        "<b>not constitute investment advice</b> or a recommendation to buy or "
+        "sell any security. AI-generated analyses can contain errors. Target "
+        "audience of this documentation: technically minded retail investors.",
         NOTE))
 
-    # 1. Was macht das Tool?
-    e.append(p("1. Was macht das Tool?", H1))
+    # 1. What does the tool do?
+    e.append(p("1. What does the tool do?", H1))
     e.append(p(
-        "Der AI Stock Research Assistant ist ein Kommandozeilen-Werkzeug (mit "
-        "optionalem lokalem Web-UI), das aus einem einzelnen Ticker-Symbol "
-        "(z.&nbsp;B. <b>AAPL</b>) ein strukturiertes Research-Memo im Stil eines "
-        "Analysten-Reports erzeugt. Dazu sammelt es automatisch Kursdaten, "
-        "Fundamentalkennzahlen, den makroökonomischen Kontext und aktuelle "
-        "Unternehmensnachrichten und lässt diese Daten von einem großen "
-        "Sprachmodell (Anthropic Claude) interpretieren."))
-    e.append(p("Typische Aufrufe:", BODY))
+        "The AI Stock Research Assistant is a command-line tool (with an "
+        "optional local web UI) that turns a single ticker symbol (e.g. "
+        "<b>AAPL</b>) into a structured research memo in the style of an "
+        "analyst report. To do so, it automatically collects price data, "
+        "fundamental metrics, the macroeconomic context and recent company "
+        "news, and has the data interpreted by a large language model "
+        "(Anthropic Claude)."))
+    e.append(p("Typical invocations:", BODY))
     e.append(p(
         "research AAPL<br/>"
         "research AAPL --deep<br/>"
         "research --compare AAPL MSFT<br/>"
         "research AAPL --offline", CODE))
     e.append(p(
-        "Pro Ticker entstehen zwei Dateien im Verzeichnis <b>reports/</b>: ein "
-        "Markdown-Memo (für Menschen) und eine JSON-Datei mit sämtlichen "
-        "Rohkennzahlen (für Maschinen bzw. eigene Auswertungen)."))
+        "Per ticker, two files are written to the <b>reports/</b> directory: a "
+        "Markdown memo (for humans) and a JSON file with all raw metrics (for "
+        "machines and your own analyses)."))
 
     # 2. Pipeline
-    e.append(p("2. Wie funktioniert die Pipeline – Schritt für Schritt", H1))
-    e.append(p("Schritt 1: Datenbeschaffung", H2))
+    e.append(p("2. How the pipeline works – step by step", H1))
+    e.append(p("Step 1: Data acquisition", H2))
     e.append(bullets([
-        "<b>Kursdaten &amp; Fundamentals (yfinance):</b> aktueller Kurs, "
-        "Marktkapitalisierung, Bewertungskennzahlen (KGV, P/B, P/S, EV/EBITDA, "
-        "PEG), Margen (Brutto, operativ, netto), Wachstum (Umsatz, Gewinn), "
-        "Verschuldung (Debt/Equity, Current Ratio), Free Cashflow, "
-        "Dividendenrendite, Beta und 52-Wochen-Spanne. Zusätzlich wird aus einem "
-        "Jahr Kurshistorie die 1-Jahres-Rendite und die annualisierte "
-        "Volatilität berechnet.",
-        "<b>Makro-Kontext (FRED API):</b> Rendite 10-jähriger US-Staatsanleihen "
-        "(DGS10), US-Leitzins (FEDFUNDS), CPI-Inflation im Jahresvergleich "
-        "(CPIAUCSL) und US-Arbeitslosenquote (UNRATE).",
-        "<b>News (yfinance-News-Feed):</b> die aktuellsten Schlagzeilen zum "
-        "Unternehmen mit Quelle und Zeitstempel.",
+        "<b>Price data &amp; fundamentals (yfinance):</b> current price, market "
+        "capitalization, valuation metrics (P/E, P/B, P/S, EV/EBITDA, PEG), "
+        "margins (gross, operating, net), growth (revenue, earnings), leverage "
+        "(debt/equity, current ratio), free cash flow, dividend yield, beta and "
+        "the 52-week range. In addition, the 1-year return and annualized "
+        "volatility are computed from one year of price history.",
+        "<b>Macro context (FRED API):</b> 10-year US Treasury yield (DGS10), "
+        "US federal funds rate (FEDFUNDS), CPI inflation year over year "
+        "(CPIAUCSL) and the US unemployment rate (UNRATE).",
+        "<b>News (yfinance news feed):</b> the most recent headlines about the "
+        "company with source and timestamp.",
     ]))
     e.append(p(
-        "Alle Daten werden zu einem <i>DataBundle</i> zusammengefasst – der "
-        "einzigen Datenquelle für alle folgenden Schritte. Im Offline-Modus "
-        "(--offline) wird stattdessen ein aufgezeichneter Snapshot geladen."))
-    e.append(p("Schritt 2 bis 5: Vierstufige KI-Analyse", H2))
+        "All data is combined into a <i>DataBundle</i> – the single source of "
+        "data for all subsequent steps. In offline mode (--offline) a recorded "
+        "snapshot is loaded instead."))
+    e.append(p("Steps 2 to 5: Four-stage AI analysis", H2))
     e.append(bullets([
-        "<b>Fundamentalanalyse:</b> Interpretation von Bewertung, Wachstum, "
-        "Margen und Verschuldung.",
-        "<b>Qualitative Einschätzung:</b> möglicher Burggraben (Moat), "
-        "wesentliche Risiken, Branchenlage – unter Einbezug von Makro-Umfeld "
-        "und Schlagzeilen.",
-        "<b>Bull Case / Bear Case:</b> je drei (Standard) bzw. fünf (--deep) "
-        "Argumente für das positive und das negative Szenario.",
-        "<b>Research-Memo:</b> ein Executive Summary, das alle vorherigen "
-        "Stufen verdichtet – bewusst ohne Kursziel und ohne Empfehlung.",
+        "<b>Fundamental analysis:</b> interpretation of valuation, growth, "
+        "margins and leverage.",
+        "<b>Qualitative assessment:</b> possible moat, key risks, industry "
+        "landscape – taking the macro environment and headlines into account.",
+        "<b>Bull case / bear case:</b> three (standard) or five (--deep) "
+        "arguments each for the positive and the negative scenario.",
+        "<b>Research memo:</b> an executive summary condensing all previous "
+        "stages – deliberately without a price target and without a recommendation.",
     ]))
     e.append(p(
-        "Jede Stufe ist ein eigener API-Aufruf an die Anthropic Messages API "
-        "(Standard-Modell: <b>claude-sonnet-5</b>, konfigurierbar über die "
-        "Umgebungsvariable STOCK_RESEARCH_MODEL). Die Memo-Stufe erhält die "
-        "Ergebnisse der vorherigen Stufen als Kontext."))
-    e.append(p("Schritt 6: Report-Generierung", H2))
+        "Each stage is a separate API call to the Anthropic Messages API "
+        "(default model: <b>claude-sonnet-5</b>, configurable via the "
+        "STOCK_RESEARCH_MODEL environment variable). The memo stage receives "
+        "the results of the previous stages as context."))
+    e.append(p("Step 6: Report generation", H2))
     e.append(p(
-        "Der Report-Generator setzt das Markdown-Memo zusammen. Wichtig: Die "
-        "<b>Kennzahlenübersicht wird nicht vom Sprachmodell erzeugt</b>, sondern "
-        "deterministisch aus den Rohdaten gerendert. Das Modell liefert nur die "
-        "Interpretation – die Tabelle ist damit garantiert konsistent mit den "
-        "Rohdaten. Jeder Report beginnt mit einem deutlichen Disclaimer."))
+        "The report generator assembles the Markdown memo. Importantly, the "
+        "<b>key-metrics table is not produced by the language model</b> – it is "
+        "rendered deterministically from the raw data. The model only provides "
+        "the interpretation, so the table is guaranteed to be consistent with "
+        "the raw data. Every report starts with a clear disclaimer."))
 
-    # 3. Datenquellen
-    e.append(p("3. Datenquellen im Detail", H1))
+    # 3. Data sources
+    e.append(p("3. Data sources in detail", H1))
     table = Table(
         [
-            ["Quelle", "Inhalt", "Zugang"],
-            ["Yahoo Finance\n(via yfinance)", "Kurse, Fundamentals, News",
-             "ohne Key (inoffizielle API)"],
-            ["FRED\n(St. Louis Fed)", "Zinsen, Inflation,\nArbeitsmarkt",
-             "kostenloser API-Key\n(FRED_API_KEY)"],
-            ["Anthropic API", "KI-Analyse\n(claude-sonnet-5)",
-             "API-Key (ANTHROPIC_API_KEY)"],
+            ["Source", "Content", "Access"],
+            ["Yahoo Finance\n(via yfinance)", "prices, fundamentals, news",
+             "no key (unofficial API)"],
+            ["FRED\n(St. Louis Fed)", "rates, inflation,\nlabor market",
+             "free API key\n(FRED_API_KEY)"],
+            ["Anthropic API", "AI analysis\n(claude-sonnet-5)",
+             "API key (ANTHROPIC_API_KEY)"],
         ],
         colWidths=[4.2 * cm, 6.0 * cm, 5.6 * cm],
     )
@@ -165,109 +163,108 @@ def build() -> None:
     e.append(table)
     e.append(Spacer(1, 8))
     e.append(p(
-        "Alle Schlüssel werden ausschließlich über Umgebungsvariablen bzw. eine "
-        "lokale .env-Datei geladen (python-dotenv). Im Repository liegt nur eine "
-        ".env.example mit Platzhaltern; die echte .env ist per .gitignore "
-        "ausgeschlossen."))
+        "All keys are loaded exclusively from environment variables or a local "
+        ".env file (python-dotenv). The repository only contains a .env.example "
+        "with placeholders; the real .env is excluded via .gitignore."))
 
-    # 4. Prompt-Aufbau
-    e.append(p("4. Wie ist der Prompt aufgebaut?", H1))
+    # 4. Prompt structure
+    e.append(p("4. How are the prompts structured?", H1))
     e.append(p(
-        "Jeder API-Aufruf besteht aus einem <b>System-Prompt</b> und einem "
-        "<b>Daten-Prompt</b>. Der System-Prompt definiert die Rolle "
-        "(nüchterner Aktienanalyst, Deutsch) und die Sicherheitsregeln:"))
+        "Every API call consists of a <b>system prompt</b> and a <b>data "
+        "prompt</b>. The system prompt defines the role (sober equity analyst) "
+        "and the safety rules:"))
     e.append(bullets([
-        "Nur die im Prompt gelieferten Daten verwenden – keine Zahlen erfinden.",
-        "Kennzahlen exakt übernehmen (Dezimalpunkt-Schreibweise, z. B. 32.5); "
-        "fehlende Werte als fehlend benennen, nicht schätzen.",
-        "Keine Kursziele, keine Kauf-/Verkaufsempfehlungen, keine Anlageberatung.",
-        "Sachliches, strukturiertes Markdown.",
+        "Use only the data provided in the prompt – never invent numbers.",
+        "Copy metrics exactly (decimal-point notation, e.g. 32.5); state "
+        "missing values as missing instead of estimating them.",
+        "No price targets, no buy/sell recommendations, no investment advice.",
+        "Factual, structured Markdown.",
     ]))
     e.append(p(
-        "Der Daten-Prompt enthält die vollständigen Rohdaten in drei Formen: als "
-        "formatierte Kennzahlen-Tabelle, als Makro-/News-Zusammenfassung und "
-        "zusätzlich als JSON-Block – gefolgt von der konkreten Aufgabe der "
-        "jeweiligen Pipeline-Stufe (inkl. gewünschter Länge und Gliederung). "
-        "Die Memo-Stufe bekommt zusätzlich die Texte der drei vorherigen Stufen."))
+        "The data prompt contains the complete raw data in three forms: as a "
+        "formatted metrics table, as a macro/news summary and additionally as a "
+        "JSON block – followed by the concrete task of the respective pipeline "
+        "stage (including desired length and structure). The memo stage "
+        "additionally receives the texts of the three previous stages."))
     e.append(p(
-        "Diese Redundanz (Tabelle + JSON) reduziert Zahlendreher; die strikte "
-        "Vorgabe der Dezimalpunkt-Schreibweise macht die Ausgaben maschinell "
-        "prüfbar (siehe Abschnitt 6, Halluzinations-Check)."))
+        "This redundancy (table + JSON) reduces transposition errors; the "
+        "strict decimal-point requirement makes the outputs machine-checkable "
+        "(see section 6, hallucination check)."))
 
-    # 5. Report lesen
+    # 5. Reading a report
     e.append(PageBreak())
-    e.append(p("5. Wie liest man einen Report?", H1))
+    e.append(p("5. How to read a report", H1))
     e.append(bullets([
-        "<b>Kopfzeile:</b> Erstellungszeit, verwendeter Analyst (Claude-Modell "
-        "oder Offline-Template), Datenstand und Datenquelle (live/fixture).",
-        "<b>Disclaimer:</b> steht bewusst ganz oben – bitte ernst nehmen.",
-        "<b>Executive Summary:</b> die Kernthese in wenigen Sätzen. Guter "
-        "Startpunkt, ersetzt aber nicht die Details.",
-        "<b>Kennzahlenübersicht:</b> deterministisch aus den Rohdaten erzeugt. "
-        "„n/a“ bedeutet: Yahoo Finance liefert diesen Wert für das "
-        "Unternehmen nicht (häufig bei Banken, z. B. Debt/Equity).",
-        "<b>Makro-Umfeld:</b> Zins- und Inflationskontext, der Bewertungen "
-        "(insbesondere KGV) einordnet.",
-        "<b>Fundamentalanalyse / Qualitative Einschätzung:</b> die "
-        "KI-Interpretation. Aussagen sind Einschätzungen, keine Fakten.",
-        "<b>Bull/Bear Case:</b> beide Seiten lesen! Die Struktur zwingt zu "
-        "einer ausgewogenen Betrachtung.",
-        "<b>Aktuelle News:</b> Schlagzeilen als Kontext – Details bitte in der "
-        "Originalquelle prüfen.",
-        "<b>Datenquellen &amp; Methodik:</b> woher die Daten stammen und wie "
-        "der Report entstand.",
+        "<b>Header:</b> creation time, analyst used (Claude model or offline "
+        "template), data timestamp and data source (live/fixture).",
+        "<b>Disclaimer:</b> deliberately at the very top – please take it seriously.",
+        "<b>Executive summary:</b> the core thesis in a few sentences. A good "
+        "starting point, but no substitute for the details.",
+        "<b>Key metrics:</b> generated deterministically from the raw data. "
+        "“n/a” means Yahoo Finance does not provide this value for "
+        "the company (common for banks, e.g. debt/equity).",
+        "<b>Macro environment:</b> the interest-rate and inflation context that "
+        "frames valuations (especially P/E multiples).",
+        "<b>Fundamental analysis / qualitative assessment:</b> the AI "
+        "interpretation. Statements are judgments, not facts.",
+        "<b>Bull/bear case:</b> read both sides! The structure enforces a "
+        "balanced view.",
+        "<b>Recent news:</b> headlines as context – check details in the "
+        "original source.",
+        "<b>Data sources &amp; methodology:</b> where the data comes from and "
+        "how the report was produced.",
     ]))
     e.append(p(
-        "Faustregel: Die Kennzahlen-Tabelle ist „hart“ (direkt aus den "
-        "Daten), der Fließtext ist „weich“ (KI-Interpretation). Wer "
-        "eine Zahl aus dem Fließtext weiterverwendet, sollte sie gegen die "
-        "Tabelle bzw. die JSON-Datei prüfen."))
+        "Rule of thumb: the metrics table is “hard” (straight from "
+        "the data), the prose is “soft” (AI interpretation). If you "
+        "reuse a number from the prose, verify it against the table or the "
+        "JSON file."))
 
-    # 6. Qualitaetssicherung
-    e.append(p("6. Qualitätssicherung: Tests und Eval-Suite", H1))
+    # 6. Quality assurance
+    e.append(p("6. Quality assurance: tests and eval suite", H1))
     e.append(p(
-        "Neben klassischen Unit-Tests (Datenparsing, Formatierung, CLI) bringt "
-        "das Projekt eine Eval-Suite mit, die zehn bekannte Ticker analysiert "
-        "und jeden erzeugten Report automatisch prüft:"))
+        "Besides classic unit tests (data parsing, formatting, CLI), the "
+        "project ships an eval suite that analyzes ten well-known tickers and "
+        "automatically checks every generated report:"))
     e.append(bullets([
-        "<b>(a) Pflicht-Sektionen:</b> Executive Summary, Kennzahlenübersicht, "
-        "Makro-Umfeld, Fundamentalanalyse, Qualitative Einschätzung, Bull/Bear "
-        "Case, News, Methodik und Disclaimer müssen vorhanden sein.",
-        "<b>(b) Kennzahlen-Konsistenz:</b> jeder Zahlwert der "
-        "Kennzahlenübersicht wird gegen die Rohdaten geprüft (relative Toleranz "
-        "0.5 % plus Rundungstoleranz).",
-        "<b>(c) Halluzinations-Check:</b> jede Zahl im KI-Fließtext muss sich "
-        "auf einen Rohdatenwert (oder eine übliche Skalierung wie Prozent oder "
-        "Mrd.) zurückführen lassen (relative Toleranz 5 %). Unbelegte Zahlen "
-        "führen zum Nichtbestehen.",
+        "<b>(a) Mandatory sections:</b> executive summary, key metrics, macro "
+        "environment, fundamental analysis, qualitative assessment, bull/bear "
+        "case, news, methodology and the disclaimer must be present.",
+        "<b>(b) Metric consistency:</b> every numeric value of the key-metrics "
+        "table is checked against the raw data (relative tolerance 0.5 % plus "
+        "rounding tolerance).",
+        "<b>(c) Hallucination check:</b> every number in the AI prose must be "
+        "traceable to a raw-data value (or a common scaling such as percent or "
+        "billions) within a relative tolerance of 5 %. Unsubstantiated numbers "
+        "fail the check.",
     ]))
     e.append(p(
-        "Die Ergebnisse landen in evals/results.json; die Trefferquote ist im "
-        "README dokumentiert. Die Suite läuft wahlweise offline (aufgezeichnete "
-        "Snapshots + regelbasierter Analyst, z. B. in CI) oder mit --live gegen "
-        "echte Daten und die echte Anthropic API."))
+        "The results are written to evals/results.json; the pass rate is "
+        "documented in the README. The suite runs either offline (recorded "
+        "snapshots + rule-based analyst, e.g. in CI) or with --live against "
+        "real data and the real Anthropic API."))
 
-    # 7. Grenzen
-    e.append(p("7. Bekannte Grenzen", H1))
+    # 7. Known limits
+    e.append(p("7. Known limits", H1))
     e.append(bullets([
-        "<b>Keine Anlageberatung</b> und keine geprüfte Finanzanalyse.",
-        "<b>Datenqualität:</b> yfinance nutzt inoffizielle "
-        "Yahoo-Finance-Schnittstellen; Werte können fehlen, verzögert oder "
-        "fehlerhaft sein. Das Format des News-Feeds ändert sich gelegentlich.",
-        "<b>LLM-Grenzen:</b> Der Halluzinations-Check prüft Zahlen, nicht "
-        "Argumentationslogik. Fehlinterpretationen bleiben möglich.",
-        "<b>US-Fokus:</b> Die Makro-Serien stammen aus US-Quellen (FRED); für "
-        "nicht-US-Aktien ist der Makro-Kontext nur bedingt aussagekräftig.",
-        "<b>Momentaufnahme:</b> Ein Report spiegelt den Datenstand zum "
-        "Abrufzeitpunkt wider – er veraltet schnell.",
-        "<b>Kein Backtest:</b> Die Eval-Suite misst Report-Qualität und "
-        "Datenkonsistenz, nicht die Prognosegüte der Analysen.",
-        "<b>Kosten:</b> Jede Analyse verursacht API-Kosten (vier Aufrufe pro "
-        "Ticker, mehr im --compare-Modus).",
+        "<b>Not investment advice</b> and not audited financial analysis.",
+        "<b>Data quality:</b> yfinance uses unofficial Yahoo Finance endpoints; "
+        "values can be missing, delayed or wrong. The news-feed format changes "
+        "occasionally.",
+        "<b>LLM limits:</b> the hallucination check validates numbers, not the "
+        "logic of the argument. Misinterpretations remain possible.",
+        "<b>US focus:</b> the macro series come from US sources (FRED); for "
+        "non-US stocks the macro context is only partially meaningful.",
+        "<b>Snapshot in time:</b> a report reflects the data at fetch time – "
+        "it goes stale quickly.",
+        "<b>No backtest:</b> the eval suite measures report quality and data "
+        "consistency, not the predictive power of the analyses.",
+        "<b>Costs:</b> every analysis incurs API costs (four calls per ticker, "
+        "more in --compare mode).",
     ]))
 
     doc.build(e)
-    print(f"PDF geschrieben: {OUT}")
+    print(f"PDF written: {OUT}")
 
 
 if __name__ == "__main__":

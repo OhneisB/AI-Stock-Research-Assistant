@@ -1,1 +1,1 @@
-"""Datenbeschaffung: Kurs-/Fundamentaldaten (yfinance), Makro (FRED), News."""
+"""Data acquisition: price/fundamental data (yfinance), macro (FRED), news."""

@@ -1,5 +1,5 @@
 {
-  "note": "Aufgezeichneter, illustrativer Daten-Snapshot fuer Offline-Tests und Evals. Werte sind NICHT aktuell - fuer echte Analysen den Live-Modus verwenden.",
+  "note": "Recorded, illustrative data snapshot for offline tests and evals. Values are NOT current - use live mode for real analyses.",
   "fundamentals": {
     "ticker": "META",
     "name": "Meta Platforms, Inc.",
@@ -42,23 +42,23 @@
     "cpi_inflation_yoy_pct": 2.7,
     "unemployment_rate_pct": 4.1,
     "as_of": "2026-07-01",
-    "source": "FRED (aufgezeichneter Snapshot / illustrativ)"
+    "source": "FRED (recorded snapshot / illustrative)"
   },
   "news": [
     {
-      "title": "Meta investiert Milliarden in KI-Infrastruktur",
+      "title": "Meta invests billions in AI infrastructure",
       "publisher": "Reuters",
       "published": "2026-07-01T12:00:00Z",
       "link": ""
     },
     {
-      "title": "Werbeerloese von Meta steigen zweistellig",
+      "title": "Meta ad revenue rises at a double-digit rate",
       "publisher": "Bloomberg",
       "published": "2026-07-01T12:00:00Z",
       "link": ""
     },
     {
-      "title": "Reality-Labs-Sparte weiter defizitaer",
+      "title": "Reality Labs segment remains loss-making",
       "publisher": "CNBC",
       "published": "2026-07-01T12:00:00Z",
       "link": ""

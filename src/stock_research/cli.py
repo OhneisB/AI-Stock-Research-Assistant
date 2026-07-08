@@ -1,10 +1,10 @@
-"""Kommandozeilen-Interface.
+"""Command-line interface.
 
-Beispiele:
-    research AAPL                 # Standard-Analyse
-    research AAPL --deep          # ausfuehrlichere Analyse
-    research --compare AAPL MSFT  # Vergleichsreport
-    research AAPL --offline       # Fixture-Daten + Offline-Analyst (ohne Keys)
+Examples:
+    research AAPL                 # standard analysis
+    research AAPL --deep          # more detailed analysis
+    research --compare AAPL MSFT  # comparison report
+    research AAPL --offline       # fixture data + offline analyst (no keys)
 """
 
 from __future__ import annotations
@@ -23,36 +23,36 @@ from .report import write_comparison, write_report
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="research",
-        description="KI-gestuetzter Aktien-Research-Assistent "
-                    "(keine Anlageberatung - siehe Disclaimer im Report).",
+        description="AI-powered stock research assistant "
+                    "(not investment advice - see the disclaimer in every report).",
     )
     parser.add_argument("tickers", nargs="+", metavar="TICKER",
-                        help="Ein oder mehrere Ticker-Symbole, z. B. AAPL MSFT")
+                        help="One or more ticker symbols, e.g. AAPL MSFT")
     parser.add_argument("--deep", action="store_true",
-                        help="Ausfuehrlichere Analyse (laengere Sektionen)")
+                        help="More detailed analysis (longer sections)")
     parser.add_argument("--compare", action="store_true",
-                        help="Vergleichsreport ueber alle angegebenen Ticker")
+                        help="Comparison report across all given tickers")
     parser.add_argument("--offline", action="store_true",
-                        help="Fixture-Daten und Offline-Analyst verwenden "
-                             "(kein Netzwerk, keine API-Keys noetig)")
+                        help="Use fixture data and the offline analyst "
+                             "(no network, no API keys required)")
     parser.add_argument("--out", default=None, metavar="DIR",
-                        help="Zielverzeichnis fuer Reports (Default: reports/)")
+                        help="Target directory for reports (default: reports/)")
     return parser
 
 
 def _template_compare_text(bundles: list[DataBundle]) -> str:
-    lines = ["Regelbasierter Kennzahlenvergleich (Offline-Modus):", ""]
-    for key, label in [("trailing_pe", "KGV (trailing)"),
-                       ("revenue_growth", "Umsatzwachstum"),
-                       ("profit_margin", "Nettomarge"),
-                       ("debt_to_equity", "Debt/Equity")]:
+    lines = ["Rule-based metric comparison (offline mode):", ""]
+    for key, label in [("trailing_pe", "P/E (trailing)"),
+                       ("revenue_growth", "Revenue growth"),
+                       ("profit_margin", "Net margin"),
+                       ("debt_to_equity", "Debt/equity")]:
         vals = []
         for b in bundles:
             v = b.fundamentals.metrics.get(key)
             vals.append(f"{b.fundamentals.ticker}: {'n/a' if v is None else round(v, 2)}")
         lines.append(f"- {label}: " + " | ".join(vals))
     lines.append("")
-    lines.append("Detailwerte siehe Kennzahlen-Tabellen unten.")
+    lines.append("See the metric tables below for details.")
     return "\n".join(lines)
 
 
@@ -61,21 +61,21 @@ def main(argv: list[str] | None = None) -> int:
     settings = get_settings(reports_dir=args.out)
 
     if args.compare and len(args.tickers) < 2:
-        print("--compare benoetigt mindestens zwei Ticker.", file=sys.stderr)
+        print("--compare requires at least two tickers.", file=sys.stderr)
         return 2
 
     if not settings.has_anthropic and not args.offline:
-        print("Hinweis: ANTHROPIC_API_KEY nicht gesetzt - verwende den "
-              "regelbasierten Offline-Analysten (kein LLM).", file=sys.stderr)
+        print("Note: ANTHROPIC_API_KEY is not set - using the rule-based "
+              "offline analyst (no LLM).", file=sys.stderr)
 
     bundles: list[DataBundle] = []
     for ticker in args.tickers:
-        print(f"[{ticker.upper()}] Sammle Daten "
-              f"({'Fixture' if args.offline else 'live: yfinance + FRED'}) ...")
+        print(f"[{ticker.upper()}] Collecting data "
+              f"({'fixture' if args.offline else 'live: yfinance + FRED'}) ...")
         try:
             bundles.append(collect(ticker, settings, offline=args.offline))
         except Exception as exc:
-            print(f"[{ticker.upper()}] Fehler beim Datenabruf: {exc}", file=sys.stderr)
+            print(f"[{ticker.upper()}] Data fetch failed: {exc}", file=sys.stderr)
             return 1
 
     exit_code = 0
@@ -83,14 +83,14 @@ def main(argv: list[str] | None = None) -> int:
         t = bundle.fundamentals.ticker
         try:
             analyst = make_analyst(settings, bundle, force_template=args.offline)
-            print(f"[{t}] Analysiere ({analyst.name}"
+            print(f"[{t}] Analyzing ({analyst.name}"
                   f"{', deep' if args.deep else ''}) ...")
             result = run_pipeline(bundle, analyst, deep=args.deep)
             md_path, json_path = write_report(bundle, result, settings.reports_dir)
             print(f"[{t}] Report:   {md_path}")
-            print(f"[{t}] Rohdaten: {json_path}")
+            print(f"[{t}] Raw data: {json_path}")
         except Exception as exc:
-            print(f"[{t}] Fehler bei der Analyse: {exc}", file=sys.stderr)
+            print(f"[{t}] Analysis failed: {exc}", file=sys.stderr)
             exit_code = 1
 
     if args.compare and len(bundles) >= 2:
@@ -102,9 +102,9 @@ def main(argv: list[str] | None = None) -> int:
                 text = ClaudeAnalyst(settings).complete(prompts.compare_prompt(bundles))
                 mode = f"claude ({settings.model})"
             path = write_comparison(bundles, text, mode, settings.reports_dir)
-            print(f"[Vergleich] Report: {path}")
+            print(f"[compare] Report: {path}")
         except Exception as exc:
-            print(f"[Vergleich] Fehler: {exc}", file=sys.stderr)
+            print(f"[compare] Failed: {exc}", file=sys.stderr)
             exit_code = 1
 
     return exit_code

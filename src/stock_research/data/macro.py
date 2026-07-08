@@ -1,4 +1,4 @@
-"""Makro-Kontext (Zinsen, Inflation, Arbeitsmarkt) via FRED API.
+"""Macro context (interest rates, inflation, labor market) via the FRED API.
 
 Docs: https://fred.stlouisfed.org/docs/api/fred/series_observations.html
 """
@@ -15,15 +15,15 @@ from .models import MacroData
 FRED_BASE = "https://api.stlouisfed.org/fred/series/observations"
 
 SERIES = {
-    "ten_year_treasury_pct": "DGS10",     # 10-jaehrige US-Staatsanleihe (%)
-    "fed_funds_rate_pct": "FEDFUNDS",     # US-Leitzins (%)
-    "unemployment_rate_pct": "UNRATE",    # US-Arbeitslosenquote (%)
+    "ten_year_treasury_pct": "DGS10",     # 10-year US Treasury yield (%)
+    "fed_funds_rate_pct": "FEDFUNDS",     # US federal funds rate (%)
+    "unemployment_rate_pct": "UNRATE",    # US unemployment rate (%)
 }
-CPI_SERIES = "CPIAUCSL"  # CPI-Index; Inflation = Veraenderung ggue. Vorjahr
+CPI_SERIES = "CPIAUCSL"  # CPI index; inflation = year-over-year change
 
 
 def parse_observations(payload: dict[str, Any]) -> list[tuple[str, float]]:
-    """Extrahiert (Datum, Wert)-Paare; FRED markiert fehlende Werte mit '.'."""
+    """Extracts (date, value) pairs; FRED marks missing values with '.'."""
     out: list[tuple[str, float]] = []
     for obs in payload.get("observations", []):
         raw = obs.get("value", ".")
@@ -42,7 +42,7 @@ def latest_value(payload: dict[str, Any]) -> float | None:
 
 
 def yoy_change_pct(payload: dict[str, Any], months: int = 12) -> float | None:
-    """Berechnet die Veraenderung des letzten Werts ggue. dem Wert vor `months` Monaten."""
+    """Computes the change of the latest value vs. the value `months` months ago."""
     obs = parse_observations(payload)
     if len(obs) <= months:
         return None
@@ -71,10 +71,10 @@ def _fred_get(series_id: str, api_key: str, limit: int = 400) -> dict[str, Any]:
 
 
 def fetch_macro(api_key: str | None) -> MacroData:
-    """Laedt den Makro-Kontext. Ohne API-Key werden leere Werte zurueckgegeben."""
+    """Loads the macro context. Without an API key, empty values are returned."""
     macro = MacroData(as_of=dt.date.today().isoformat())
     if not api_key:
-        macro.source = "FRED (kein API-Key gesetzt - Makro-Daten uebersprungen)"
+        macro.source = "FRED (no API key set - macro data skipped)"
         return macro
 
     for field, series_id in SERIES.items():

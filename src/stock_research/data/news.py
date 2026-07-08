@@ -1,4 +1,4 @@
-"""Aktuelle Unternehmens-News ueber den yfinance-News-Feed."""
+"""Recent company news via the yfinance news feed."""
 
 from __future__ import annotations
 
@@ -9,11 +9,11 @@ from .models import NewsItem
 
 
 def parse_news(raw_items: list[dict[str, Any]], limit: int = 8) -> list[NewsItem]:
-    """Normalisiert die yfinance-News-Struktur.
+    """Normalizes the yfinance news structure.
 
-    yfinance hat das Format mehrfach geaendert: aeltere Versionen liefern flache
-    Dicts (title/publisher/providerPublishTime/link), neuere verschachteln alles
-    unter 'content'. Beide Varianten werden unterstuetzt.
+    yfinance has changed the format several times: older versions return flat
+    dicts (title/publisher/providerPublishTime/link), newer versions nest
+    everything under 'content'. Both variants are supported.
     """
     items: list[NewsItem] = []
     for raw in raw_items or []:

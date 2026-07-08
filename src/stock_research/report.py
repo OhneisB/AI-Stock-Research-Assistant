@@ -1,4 +1,4 @@
-"""Report-Generierung: Markdown-Memo + JSON mit allen Rohkennzahlen."""
+"""Report generation: Markdown memo + JSON with all raw metrics."""
 
 from __future__ import annotations
 
@@ -11,17 +11,17 @@ from .analysis.formatting import macro_summary, metrics_table_markdown, news_sum
 from .analysis.pipeline import AnalysisResult
 from .data.models import DataBundle
 
-# Pflicht-Sektionen jedes Reports - die Eval-Suite prueft genau diese Liste.
+# Mandatory sections of every report - the eval suite checks exactly this list.
 REQUIRED_SECTIONS: list[str] = [
     "## Executive Summary",
-    "## Kennzahlenuebersicht",
-    "## Makro-Umfeld",
-    "## Fundamentalanalyse",
-    "## Qualitative Einschaetzung",
+    "## Key Metrics",
+    "## Macro Environment",
+    "## Fundamental Analysis",
+    "## Qualitative Assessment",
     "### Bull Case",
     "### Bear Case",
-    "## Aktuelle News",
-    "## Datenquellen & Methodik",
+    "## Recent News",
+    "## Data Sources & Methodology",
 ]
 
 
@@ -32,42 +32,42 @@ def render_markdown(bundle: DataBundle, result: AnalysisResult) -> str:
     if "### Bull Case" not in bull_bear:
         bull_bear = "### Bull Case\n" + bull_bear
     parts = [
-        f"# Research-Memo: {f.name} ({f.ticker})",
-        f"*Erstellt: {created} | Analyst: {result.model} | "
-        f"Datenstand: {bundle.collected_at or 'n/a'} | Datenquelle: {bundle.data_source} | "
+        f"# Research Memo: {f.name} ({f.ticker})",
+        f"*Created: {created} | Analyst: {result.model} | "
+        f"Data as of: {bundle.collected_at or 'n/a'} | Data source: {bundle.data_source} | "
         f"stock-research v{__version__}*",
         DISCLAIMER,
         "## Executive Summary",
         result.sections.get("memo", ""),
-        "## Kennzahlenuebersicht",
+        "## Key Metrics",
         metrics_table_markdown(bundle),
-        "## Makro-Umfeld",
+        "## Macro Environment",
         macro_summary(bundle),
-        "## Fundamentalanalyse",
-        result.sections.get("fundamentalanalyse", ""),
-        "## Qualitative Einschaetzung",
-        result.sections.get("qualitative_einschaetzung", ""),
+        "## Fundamental Analysis",
+        result.sections.get("fundamental_analysis", ""),
+        "## Qualitative Assessment",
+        result.sections.get("qualitative_assessment", ""),
         "## Bull Case / Bear Case",
         bull_bear,
-        "## Aktuelle News",
+        "## Recent News",
         news_summary(bundle),
-        "## Datenquellen & Methodik",
-        "- Kurs- und Fundamentaldaten: Yahoo Finance (via yfinance)\n"
-        "- Makro-Daten: FRED (Federal Reserve Bank of St. Louis)\n"
-        "- News: Yahoo-Finance-News-Feed\n"
-        "- Analyse: "
-        + ("Anthropic API, Modell " + result.model.removeprefix("claude:")
+        "## Data Sources & Methodology",
+        "- Price and fundamental data: Yahoo Finance (via yfinance)\n"
+        "- Macro data: FRED (Federal Reserve Bank of St. Louis)\n"
+        "- News: Yahoo Finance news feed\n"
+        "- Analysis: "
+        + ("Anthropic API, model " + result.model.removeprefix("claude:")
            if result.mode == "claude"
-           else "regelbasierter Offline-Analyst (kein LLM)")
-        + "\n- Die Kennzahlenuebersicht wird deterministisch aus den Rohdaten erzeugt, "
-        "nicht vom Sprachmodell.",
+           else "rule-based offline analyst (no LLM)")
+        + "\n- The key-metrics table is generated deterministically from the raw data, "
+        "not by the language model.",
     ]
     return "\n\n".join(p for p in parts if p is not None)
 
 
 def write_report(bundle: DataBundle, result: AnalysisResult,
                  reports_dir: Path) -> tuple[Path, Path]:
-    """Schreibt Markdown-Memo und JSON-Rohdaten nach reports/."""
+    """Writes the Markdown memo and the JSON raw data to reports/."""
     reports_dir.mkdir(parents=True, exist_ok=True)
     stamp = dt.date.today().isoformat()
     base = f"{bundle.fundamentals.ticker}_{stamp}"
@@ -101,14 +101,14 @@ def write_comparison(bundles: list[DataBundle], text: str, mode: str,
     tickers = "_vs_".join(b.fundamentals.ticker for b in bundles)
     created = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     parts = [
-        f"# Vergleich: {' vs. '.join(b.fundamentals.ticker for b in bundles)}",
-        f"*Erstellt: {created} | Modus: {mode}*",
+        f"# Comparison: {' vs. '.join(b.fundamentals.ticker for b in bundles)}",
+        f"*Created: {created} | Mode: {mode}*",
         DISCLAIMER,
-        "## Vergleichsanalyse",
+        "## Comparative Analysis",
         text,
     ]
     for b in bundles:
-        parts.append(f"## Kennzahlen {b.fundamentals.ticker}")
+        parts.append(f"## Key Metrics {b.fundamentals.ticker}")
         parts.append(metrics_table_markdown(b))
     path = reports_dir / f"{tickers}_{dt.date.today().isoformat()}.md"
     path.write_text("\n\n".join(parts), encoding="utf-8")

@@ -1,7 +1,7 @@
-"""Kursdaten und Fundamentals via yfinance.
+"""Price data and fundamentals via yfinance.
 
-Der Netzwerkzugriff ist bewusst von der Parsing-Logik getrennt, damit das
-Parsing mit Fixtures unit-getestet werden kann.
+Network access is deliberately separated from the parsing logic so the
+parsing can be unit-tested with fixtures.
 """
 
 from __future__ import annotations
@@ -13,7 +13,7 @@ from .models import FUNDAMENTAL_FIELDS, Fundamentals, PriceStats
 
 
 def _clean_number(value: Any) -> float | None:
-    """Konvertiert yfinance-Werte robust nach float (None bei Muell)."""
+    """Robustly converts yfinance values to float (None for garbage)."""
     if value is None or isinstance(value, bool):
         return None
     try:
@@ -26,11 +26,11 @@ def _clean_number(value: Any) -> float | None:
 
 
 def parse_info(ticker: str, info: dict[str, Any]) -> Fundamentals:
-    """Extrahiert die relevanten Kennzahlen aus einem yfinance-Info-Dict."""
+    """Extracts the relevant metrics from a yfinance info dict."""
     metrics: dict[str, float | None] = {}
     for field, yf_key in FUNDAMENTAL_FIELDS.items():
         metrics[field] = _clean_number(info.get(yf_key))
-    # Fallback: currentPrice fehlt bei manchen Tickern
+    # Fallback: currentPrice is missing for some tickers
     if metrics.get("price") is None:
         metrics["price"] = _clean_number(
             info.get("regularMarketPrice") or info.get("previousClose")
@@ -46,7 +46,7 @@ def parse_info(ticker: str, info: dict[str, Any]) -> Fundamentals:
 
 
 def compute_price_stats(closes: list[float], trading_days_per_year: int = 252) -> PriceStats:
-    """Berechnet 1-Jahres-Rendite und annualisierte Volatilitaet aus Schlusskursen."""
+    """Computes 1-year return and annualized volatility from closing prices."""
     closes = [c for c in (_clean_number(c) for c in closes) if c is not None and c > 0]
     if len(closes) < 2:
         return PriceStats(last_close=closes[-1] if closes else None)
@@ -66,13 +66,13 @@ def compute_price_stats(closes: list[float], trading_days_per_year: int = 252) -
 
 
 def fetch_market_data(ticker: str) -> tuple[Fundamentals, PriceStats]:
-    """Laedt Info-Dict und 1 Jahr Kurshistorie von Yahoo Finance."""
-    import yfinance as yf  # lazy import: Tests/Offline-Modus brauchen es nicht
+    """Loads the info dict and 1 year of price history from Yahoo Finance."""
+    import yfinance as yf  # lazy import: tests/offline mode do not need it
 
     t = yf.Ticker(ticker)
     info = t.info or {}
     if not info.get("longName") and not info.get("shortName") and not info.get("regularMarketPrice"):
-        raise ValueError(f"Keine Daten fuer Ticker '{ticker}' gefunden - Symbol pruefen.")
+        raise ValueError(f"No data found for ticker '{ticker}' - please check the symbol.")
     fundamentals = parse_info(ticker, info)
 
     history = t.history(period="1y", auto_adjust=True)

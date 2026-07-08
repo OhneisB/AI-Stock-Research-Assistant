@@ -1,23 +1,23 @@
-"""Tests fuer das Parsing von yfinance-Daten (ohne Netzwerk)."""
+"""Tests for parsing yfinance data (no network)."""
 
 import math
 
 from stock_research.data.market import _clean_number, compute_price_stats, parse_info
 
 SAMPLE_INFO = {
-    "longName": "Beispiel AG",
+    "longName": "Example Corp",
     "sector": "Technology",
     "industry": "Software",
     "currency": "EUR",
     "currentPrice": 123.45,
     "marketCap": 5_000_000_000,
     "trailingPE": 22.5,
-    "forwardPE": "19.1",          # yfinance liefert gelegentlich Strings
+    "forwardPE": "19.1",          # yfinance occasionally returns strings
     "profitMargins": 0.18,
     "revenueGrowth": 0.07,
     "debtToEquity": 45.2,
     "dividendYield": 0.015,
-    "beta": float("nan"),          # NaN muss zu None werden
+    "beta": float("nan"),          # NaN must become None
     "freeCashflow": None,
 }
 
@@ -33,9 +33,9 @@ def test_clean_number_edge_cases():
 
 
 def test_parse_info_extracts_metrics():
-    f = parse_info("bsp", SAMPLE_INFO)
-    assert f.ticker == "BSP"
-    assert f.name == "Beispiel AG"
+    f = parse_info("xmpl", SAMPLE_INFO)
+    assert f.ticker == "XMPL"
+    assert f.name == "Example Corp"
     assert f.currency == "EUR"
     assert f.metrics["price"] == 123.45
     assert f.metrics["trailing_pe"] == 22.5
@@ -50,7 +50,7 @@ def test_parse_info_price_fallback():
 
 
 def test_compute_price_stats():
-    # 10 % Anstieg ueber die Serie
+    # 10 % gain over the series
     closes = [100.0, 101.0, 102.0, 104.0, 106.0, 110.0]
     stats = compute_price_stats(closes)
     assert stats.return_1y_pct == 10.0
