@@ -20,10 +20,11 @@ venv/
 .cache/
 *.sqlite
 
-# Output data (generated reports, not versioned)
+# Output data (generated reports/docs, not versioned)
 reports/
 output/
 evals/output/
+docs/
 
 # uv
 uv.lock

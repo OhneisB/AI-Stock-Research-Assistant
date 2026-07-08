@@ -187,8 +187,16 @@ src/stock_research/
 
 evals/                  # eval suite, fixtures and results.json
 tests/                  # pytest suite (offline)
-docs/documentation.pdf  # detailed documentation
 scripts/generate_pdf.py # generates the PDF documentation (reportlab)
+```
+
+### PDF documentation
+
+The detailed PDF documentation is not versioned in the repository — generate it
+locally when needed:
+
+```bash
+python scripts/generate_pdf.py   # writes docs/documentation.pdf (gitignored)
 ```
 
 ## Limitations
